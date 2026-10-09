@@ -11,7 +11,9 @@ import {
   GraduationCap,
   Activity,
   Sparkles,
-  Scissors
+  Scissors,
+  Menu,
+  X
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -20,6 +22,8 @@ export const Header: React.FC = () => {
     setActiveView,
     setIsSearchOpen,
     masteredStructureIds,
+    isSidebarOpen,
+    toggleSidebar,
   } = useNeuroStore();
 
   const totalStructures = ANATOMICAL_STRUCTURES.length;
@@ -37,20 +41,29 @@ export const Header: React.FC = () => {
   ];
 
   return (
-    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e6e1d6] px-4 md:px-6 flex items-center justify-between gap-4 z-30 select-none shadow-sm">
-      {/* Brand */}
-      <div className="flex items-center gap-3 shrink-0">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center shadow-md shadow-amber-500/10 text-white">
+    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e6e1d6] px-3 sm:px-4 md:px-6 flex items-center justify-between gap-2 sm:gap-4 z-30 select-none shadow-sm shrink-0">
+      {/* Brand & Mobile/Tablet Sidebar Toggle */}
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <button
+          onClick={toggleSidebar}
+          className="lg:hidden p-2 rounded-xl text-slate-700 hover:text-slate-900 bg-[#f4f0e8] hover:bg-[#ede7da] border border-[#ded7c8] transition-colors shrink-0 flex items-center justify-center"
+          title={isSidebarOpen ? 'Cerrar temario' : 'Abrir temario y estructuras'}
+          aria-label="Abrir temario y estructuras"
+        >
+          {isSidebarOpen ? <X className="w-4 h-4 text-slate-700" /> : <Menu className="w-4 h-4 text-slate-700" />}
+        </button>
+
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center shadow-md shadow-amber-500/10 text-white shrink-0">
           <Brain className="w-5 h-5" />
         </div>
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-base font-bold tracking-tight text-slate-900 flex items-center gap-1.5 font-sans">
+          <div className="flex items-center gap-1.5">
+            <h1 className="text-sm sm:text-base font-bold tracking-tight text-slate-900 flex items-center gap-1.5 font-sans">
               NeuroAtlas
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-mono font-normal">v1.0</span>
             </h1>
           </div>
-          <p className="text-[10px] text-slate-500 hidden sm:block">
+          <p className="text-[10px] text-slate-500 hidden lg:block">
             Neuropsicología Clínica • UDP (PSI4436)
           </p>
         </div>

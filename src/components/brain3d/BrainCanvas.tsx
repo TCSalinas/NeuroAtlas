@@ -66,13 +66,17 @@ const CameraManager: React.FC = () => {
       panSpeed={0.6}
       minDistance={1.8}
       maxDistance={9.0}
+      touches={{
+        ONE: THREE.TOUCH.ROTATE,
+        TWO: THREE.TOUCH.DOLLY_PAN,
+      }}
     />
   );
 };
 
 export const BrainCanvas: React.FC = () => {
   return (
-    <div className="w-full h-full relative bg-gradient-to-b from-[#f9f7f2] via-[#f2eee5] to-[#e8e2d5] select-none">
+    <div className="w-full h-full relative bg-gradient-to-b from-[#f9f7f2] via-[#f2eee5] to-[#e8e2d5] select-none touch-none">
       <Canvas
         camera={{ position: [3.2, 2.0, 3.8], fov: 45 }}
         gl={{

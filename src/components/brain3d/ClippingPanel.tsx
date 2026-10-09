@@ -89,7 +89,7 @@ export const ClippingPanel: React.FC<ClippingPanelProps> = ({ onClose }) => {
     (clipping.axialEnabled ? 1 : 0);
 
   return (
-    <div className="absolute top-16 right-4 z-20 w-88 bg-[#faf8f5]/95 backdrop-blur-md border border-[#e6e1d6] rounded-2xl p-4 shadow-xl text-slate-800 font-sans">
+    <div className="absolute top-16 right-2 sm:right-4 z-20 w-[calc(100%-1rem)] max-w-sm sm:w-88 bg-[#faf8f5]/95 backdrop-blur-md border border-[#e6e1d6] rounded-2xl p-4 shadow-xl text-slate-800 font-sans">
       {/* Header */}
       <div className="flex items-center justify-between pb-3 border-b border-[#e8e2d5]">
         <div className="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase tracking-wide">

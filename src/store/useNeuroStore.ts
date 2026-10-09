@@ -29,6 +29,7 @@ interface NeuroState {
   selectedSliceStructureKey: string | null;
   dementiaFilterQuery: string | null;
   selectedLayerNum: number | null;
+  isSidebarOpen: boolean;
   
   // Actions
   selectStructure: (id: string | null) => void;
@@ -50,6 +51,8 @@ interface NeuroState {
   setSelectedSliceStructureKey: (key: string | null) => void;
   setDementiaFilterQuery: (query: string | null) => void;
   setSelectedLayerNum: (layer: number | null) => void;
+  setIsSidebarOpen: (open: boolean) => void;
+  toggleSidebar: () => void;
 }
 
 const LOCAL_STORAGE_KEY_MASTERED = 'neuroatlas_mastered_structures';
@@ -99,6 +102,7 @@ export const useNeuroStore = create<NeuroState>((set, get) => ({
   selectedSliceStructureKey: null,
   dementiaFilterQuery: null,
   selectedLayerNum: null,
+  isSidebarOpen: false,
 
   selectStructure: (id) => {
     set((state) => ({
@@ -216,4 +220,6 @@ export const useNeuroStore = create<NeuroState>((set, get) => ({
   setSelectedSliceStructureKey: (key) => set({ selectedSliceStructureKey: key }),
   setDementiaFilterQuery: (query) => set({ dementiaFilterQuery: query }),
   setSelectedLayerNum: (layer) => set({ selectedLayerNum: layer }),
+  setIsSidebarOpen: (open) => set({ isSidebarOpen: open }),
+  toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
 }));

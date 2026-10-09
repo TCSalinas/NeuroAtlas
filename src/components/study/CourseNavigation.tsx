@@ -9,7 +9,8 @@ import {
   CheckCircle2,
   ChevronRight,
   BookOpen,
-  Filter
+  Filter,
+  X
 } from 'lucide-react';
 
 export const CourseNavigation: React.FC = () => {
@@ -20,6 +21,8 @@ export const CourseNavigation: React.FC = () => {
     setActiveUnit,
     masteredStructureIds,
     setIsSearchOpen,
+    isSidebarOpen,
+    setIsSidebarOpen,
   } = useNeuroStore();
 
   const [activeTab, setActiveTab] = useState<'unidades' | 'estructuras'>('unidades');
@@ -38,20 +41,44 @@ export const CourseNavigation: React.FC = () => {
   });
 
   return (
-    <aside className="w-full md:w-80 lg:w-84 h-full bg-[#faf8f5] backdrop-blur-xl border-r border-[#e6e1d6] flex flex-col z-20 text-slate-800 font-sans">
-      {/* Search Bar Trigger */}
-      <div className="p-3 border-b border-[#e8e2d5] bg-white">
-        <button
-          onClick={() => setIsSearchOpen(true)}
-          className="w-full flex items-center justify-between px-3 py-2 bg-[#f4efe4] hover:bg-[#ede7da] text-slate-600 hover:text-slate-900 rounded-xl border border-[#ded7c8] text-xs transition-all shadow-sm"
-        >
-          <span className="flex items-center gap-2">
-            <Search className="w-3.5 h-3.5 text-amber-700" />
-            <span className="font-medium">Buscar estructura, síndrome...</span>
-          </span>
-          <kbd className="text-[10px] bg-white text-slate-500 font-mono px-1.5 py-0.5 rounded border border-[#d6cfbe]">⌘K</kbd>
-        </button>
-      </div>
+    <>
+      {/* Mobile & Tablet Backdrop */}
+      {isSidebarOpen && (
+        <div
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 bg-stone-950/40 backdrop-blur-xs z-30 lg:hidden animate-fadeIn"
+        />
+      )}
+
+      <aside
+        className={`fixed lg:static top-0 bottom-0 left-0 z-40 w-80 max-w-[85vw] h-full bg-[#faf8f5] backdrop-blur-xl border-r border-[#e6e1d6] flex flex-col shadow-2xl lg:shadow-none transition-transform duration-300 ease-in-out text-slate-800 font-sans ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        } ${!isSidebarOpen ? 'hidden lg:flex' : 'flex'}`}
+      >
+        {/* Search Bar Trigger & Mobile Close Button */}
+        <div className="p-3 border-b border-[#e8e2d5] bg-white flex items-center gap-2">
+          <button
+            onClick={() => {
+              setIsSearchOpen(true);
+              if (window.innerWidth < 1024) setIsSidebarOpen(false);
+            }}
+            className="flex-1 flex items-center justify-between px-3 py-2 bg-[#f4efe4] hover:bg-[#ede7da] text-slate-600 hover:text-slate-900 rounded-xl border border-[#ded7c8] text-xs transition-all shadow-sm"
+          >
+            <span className="flex items-center gap-2">
+              <Search className="w-3.5 h-3.5 text-amber-700" />
+              <span className="font-medium">Buscar estructura, síndrome...</span>
+            </span>
+            <kbd className="text-[10px] bg-white text-slate-500 font-mono px-1.5 py-0.5 rounded border border-[#d6cfbe]">⌘K</kbd>
+          </button>
+
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="lg:hidden p-2 text-slate-400 hover:text-slate-800 rounded-xl hover:bg-[#ede7da] transition-colors"
+            title="Cerrar temario"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
 
       {/* Navigation Sub-Tabs */}
       <div className="flex border-b border-[#e8e2d5] bg-[#f5f1e8] p-1">
@@ -199,7 +226,10 @@ export const CourseNavigation: React.FC = () => {
               return (
                 <button
                   key={struct.id}
-                  onClick={() => selectStructure(isSelected ? null : struct.id)}
+                  onClick={() => {
+                    selectStructure(isSelected ? null : struct.id);
+                    if (window.innerWidth < 1024) setIsSidebarOpen(false);
+                  }}
                   className={`w-full p-2.5 rounded-xl text-left flex items-center justify-between gap-2 transition-all ${
                     isSelected
                       ? 'bg-amber-50 border-2 border-amber-600 text-slate-900 shadow-md ring-2 ring-amber-400/40'
@@ -260,5 +290,6 @@ export const CourseNavigation: React.FC = () => {
         </div>
       </div>
     </aside>
+    </>
   );
 };

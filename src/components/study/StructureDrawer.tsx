@@ -96,7 +96,13 @@ export const StructureDrawer: React.FC = () => {
 
   return (
     <>
-      <aside className="w-full md:w-96 lg:w-[420px] h-full bg-[#faf8f5] backdrop-blur-xl border-l border-[#e6e1d6] flex flex-col shadow-xl z-20 overflow-hidden text-slate-800 font-sans min-w-0">
+      {/* Tablet & Mobile Backdrop */}
+      <div
+        onClick={() => selectStructure(null)}
+        className="fixed inset-0 bg-stone-950/30 backdrop-blur-xs z-30 xl:hidden animate-fadeIn"
+      />
+
+      <aside className="fixed xl:static top-0 bottom-0 right-0 z-40 w-full sm:w-[400px] xl:w-[420px] h-full bg-[#faf8f5] backdrop-blur-xl border-l border-[#e6e1d6] flex flex-col shadow-2xl xl:shadow-none overflow-hidden text-slate-800 font-sans min-w-0">
         {/* Header of Drawer */}
         <div className="p-4 border-b border-[#e8e2d5] bg-white shrink-0">
           <div className="flex items-start justify-between gap-3 min-w-0">
