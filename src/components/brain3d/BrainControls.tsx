@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useNeuroStore } from '../../store/useNeuroStore';
 import { ClippingPanel } from './ClippingPanel';
+import { ANATOMICAL_STRUCTURES } from '../../data/structures';
 import {
   RotateCcw,
   Eye,
-  Layers,
   Scissors,
   Focus,
   Compass,
+  Layers,
+  Sparkles,
+  X
 } from 'lucide-react';
 
 export const BrainControls: React.FC = () => {
@@ -18,13 +21,16 @@ export const BrainControls: React.FC = () => {
     isolatedStructureId,
     setIsolatedStructure,
     selectedStructureId,
+    selectStructure,
+    activeVascularFilter,
+    setActiveVascularFilter,
   } = useNeuroStore();
 
   const [showClipping, setShowClipping] = useState(false);
 
   const presets = [
-    { id: 'lateral_izq', label: 'Lateral Izq' },
-    { id: 'lateral_der', label: 'Lateral Der' },
+    { id: 'lateral_izq', label: 'Lat. Izq' },
+    { id: 'lateral_der', label: 'Lat. Der' },
     { id: 'medial_sagital', label: 'Medial' },
     { id: 'superior', label: 'Dorsal' },
     { id: 'inferior', label: 'Ventral' },
@@ -34,91 +40,158 @@ export const BrainControls: React.FC = () => {
 
   return (
     <>
-      {/* View Presets Bar (Top of 3D Canvas) */}
-      <div className="absolute top-4 left-4 z-10 flex flex-wrap items-center gap-1.5 bg-slate-900/85 backdrop-blur-md p-1.5 rounded-xl border border-slate-800 shadow-xl">
-        <div className="flex items-center gap-1.5 px-2 py-1 text-slate-400 text-xs font-medium border-r border-slate-800">
-          <Compass className="w-3.5 h-3.5 text-sky-400" />
-          <span className="hidden sm:inline">Vistas:</span>
+      {/* Unified, Responsive Top Control Bar (Never overlaps!) */}
+      <div className="absolute top-3 left-3 right-3 z-10 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+        {/* Left: View Presets Group */}
+        <div className="pointer-events-auto flex items-center gap-1 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-[#e2ded4] shadow-md shadow-stone-200/50">
+          <div className="flex items-center gap-1.5 px-2 py-1 text-slate-500 text-xs font-semibold border-r border-slate-200">
+            <Compass className="w-3.5 h-3.5 text-sky-600" />
+            <span className="hidden sm:inline">Vistas</span>
+          </div>
+
+          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
+            {presets.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => triggerCameraPreset(p.id)}
+                className="px-2 py-1 text-xs rounded-xl font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-all active:scale-95 whitespace-nowrap"
+              >
+                {p.label}
+              </button>
+            ))}
+            <button
+              onClick={() => triggerCameraPreset('reset')}
+              className="p-1.5 text-slate-500 hover:text-sky-600 hover:bg-sky-50 rounded-xl transition-all"
+              title="Restablecer vista inicial"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
-        {presets.map((p) => (
+
+        {/* Center: Selected Structure Indicator */}
+        {selectedStructureId && (() => {
+          const s = ANATOMICAL_STRUCTURES.find((x) => x.id === selectedStructureId);
+          if (!s) return null;
+          return (
+            <div className="pointer-events-auto flex items-center gap-2 bg-amber-500 text-slate-950 px-3 py-1.5 rounded-2xl text-xs font-black shadow-md border border-amber-300 animate-fadeIn">
+              <span className="w-2 h-2 rounded-full bg-slate-950" />
+              <span>📍 {s.name}</span>
+              {isolatedStructureId && (
+                <span className="px-1.5 py-0.5 rounded-md bg-slate-950 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
+                  Aislado
+                </span>
+              )}
+              <button
+                onClick={() => {
+                  selectStructure(null);
+                  setIsolatedStructure(null);
+                }}
+                className="p-0.5 hover:bg-amber-600 rounded-lg text-slate-950 transition-colors ml-1"
+                title="Deseleccionar estructura y restaurar encéfalo completo"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          );
+        })()}
+
+        {/* If isolatedStructureId is active but selectedStructureId is null, show clear indicator */}
+        {!selectedStructureId && isolatedStructureId && (() => {
+          const s = ANATOMICAL_STRUCTURES.find((x) => x.id === isolatedStructureId);
+          return (
+            <div className="pointer-events-auto flex items-center gap-2 bg-amber-600 text-white px-3 py-1.5 rounded-2xl text-xs font-bold shadow-md border border-amber-400 animate-fadeIn">
+              <Focus className="w-3.5 h-3.5 text-amber-200" />
+              <span>Aislado: {s?.name || 'Estructura'}</span>
+              <button
+                onClick={() => setIsolatedStructure(null)}
+                className="p-0.5 hover:bg-amber-700 rounded-lg text-white transition-colors ml-1 font-bold flex items-center gap-1"
+                title="Restaurar encéfalo completo"
+              >
+                <X className="w-3.5 h-3.5" />
+                <span className="text-[10px]">Restaurar</span>
+              </button>
+            </div>
+          );
+        })()}
+
+        {/* Right: Inspection Tools (X-Ray, Isolation, Slicing) */}
+        <div className="pointer-events-auto flex items-center gap-1.5 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-[#e2ded4] shadow-md shadow-stone-200/50">
+          {/* Active Vascular Filter Reset Indicator */}
+          {activeVascularFilter !== 'all' && (
+            <button
+              onClick={() => setActiveVascularFilter('all')}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-bold bg-rose-50 border border-rose-300 text-rose-800 hover:bg-rose-100 transition-all shadow-sm"
+              title="Restablecer iluminación normal de todas las arterias"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-rose-600" />
+              <span>Ver Todo ({activeVascularFilter.toUpperCase()})</span>
+            </button>
+          )}
+
+          {/* Toggle Ghosting / X-Ray */}
           <button
-            key={p.id}
-            onClick={() => triggerCameraPreset(p.id)}
-            className="px-2.5 py-1 text-xs rounded-lg font-medium text-slate-300 hover:text-white hover:bg-slate-800/90 transition-all active:scale-95"
+            onClick={toggleXRayMode}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
+              isXRayMode
+                ? 'bg-sky-100 border-sky-300 text-sky-800 shadow-sm'
+                : 'bg-white border-transparent text-slate-700 hover:bg-slate-100'
+            }`}
+            title="Atenúa la corteza para explorar estructuras profundas y subcorticales"
           >
-            {p.label}
+            <Eye className="w-3.5 h-3.5 text-sky-600" />
+            <span>Rayos X</span>
           </button>
-        ))}
-        <button
-          onClick={() => triggerCameraPreset('reset')}
-          className="p-1.5 text-xs text-slate-400 hover:text-sky-400 hover:bg-slate-800 rounded-lg transition-all"
-          title="Restablecer posición inicial de la cámara"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-        </button>
-      </div>
 
-      {/* Floating Action Controls (Right side of 3D Canvas) */}
-      <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-        {/* Toggle Ghosting / X-Ray */}
-        <button
-          onClick={toggleXRayMode}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border backdrop-blur-md transition-all shadow-lg active:scale-95 ${
-            isXRayMode
-              ? 'bg-sky-500/20 border-sky-400/80 text-sky-300 shadow-sky-500/10'
-              : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white'
-          }`}
-          title="Atenúa la corteza para explorar estructuras profundas y subcorticales"
-        >
-          <Eye className="w-3.5 h-3.5" />
-          <span>Rayos X</span>
-        </button>
+          {/* Toggle Structure Isolation */}
+          <button
+            disabled={!selectedStructureId && !isolatedStructureId}
+            onClick={() => {
+              if (isolatedStructureId) {
+                setIsolatedStructure(null);
+              } else if (selectedStructureId) {
+                setIsolatedStructure(selectedStructureId);
+              }
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold border transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed ${
+              isolatedStructureId
+                ? 'bg-amber-100 border-amber-300 text-amber-900 shadow-sm'
+                : 'bg-white border-transparent text-slate-700 hover:bg-slate-100'
+            }`}
+            title={isolatedStructureId ? "Restaurar encéfalo completo" : "Aislar la estructura actualmente seleccionada"}
+          >
+            <Focus className="w-3.5 h-3.5 text-amber-600" />
+            <span>{isolatedStructureId ? 'Restaurar' : 'Aislar'}</span>
+          </button>
 
-        {/* Toggle Structure Isolation */}
-        <button
-          disabled={!selectedStructureId}
-          onClick={() => {
-            if (isolatedStructureId) {
-              setIsolatedStructure(null);
-            } else if (selectedStructureId) {
-              setIsolatedStructure(selectedStructureId);
-            }
-          }}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border backdrop-blur-md transition-all shadow-lg active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed ${
-            isolatedStructureId
-              ? 'bg-amber-500/20 border-amber-400/80 text-amber-300 shadow-amber-500/10'
-              : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white'
-          }`}
-          title="Aislar la estructura actualmente seleccionada"
-        >
-          <Focus className="w-3.5 h-3.5" />
-          <span>{isolatedStructureId ? 'Mostrar Todo' : 'Aislar'}</span>
-        </button>
-
-        {/* Toggle Anatomical Slicing Panel */}
-        <button
-          onClick={() => setShowClipping((v) => !v)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border backdrop-blur-md transition-all shadow-lg active:scale-95 ${
-            showClipping
-              ? 'bg-purple-500/20 border-purple-400/80 text-purple-300 shadow-purple-500/10'
-              : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white'
-          }`}
-          title="Abrir controles de cortes anatómicos dinámicos"
-        >
-          <Scissors className="w-3.5 h-3.5" />
-          <span>Cortes 3D</span>
-        </button>
+          {/* Toggle Anatomical Slicing Panel */}
+          <button
+            onClick={() => setShowClipping((v) => !v)}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
+              showClipping
+                ? 'bg-purple-100 border-purple-300 text-purple-900 shadow-sm'
+                : 'bg-white border-transparent text-slate-700 hover:bg-slate-100'
+            }`}
+            title="Abrir controles de cortes anatómicos dinámicos"
+          >
+            <Scissors className="w-3.5 h-3.5 text-purple-600" />
+            <span>Cortes 3D</span>
+          </button>
+        </div>
       </div>
 
       {/* Slicing Controls Modal/Panel */}
       {showClipping && <ClippingPanel onClose={() => setShowClipping(false)} />}
 
       {/* Interaction Hint (Bottom Center) */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none hidden md:flex items-center gap-3 bg-slate-950/70 backdrop-blur-md border border-slate-800/80 px-4 py-1.5 rounded-full text-[11px] text-slate-400 shadow-xl">
-        <span className="flex items-center gap-1"><Layers className="w-3 h-3 text-sky-400" /> Clic: seleccionar estructura</span>
-        <span>•</span>
-        <span>Arrastrar: rotar 360°</span>
-        <span>•</span>
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 pointer-events-none hidden md:flex items-center gap-3 bg-white/90 backdrop-blur-md border border-[#e2ded4] px-4 py-1.5 rounded-full text-xs text-slate-600 shadow-md">
+        <span className="flex items-center gap-1.5 font-medium text-slate-700">
+          <Layers className="w-3.5 h-3.5 text-sky-600" />
+          Clic: seleccionar
+        </span>
+        <span className="text-slate-300">•</span>
+        <span>Arrastrar: rotar</span>
+        <span className="text-slate-300">•</span>
         <span>Rueda: zoom</span>
       </div>
     </>

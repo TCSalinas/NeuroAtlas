@@ -28,17 +28,19 @@ export const COURSE_UNITS: CourseUnit[] = [
       'Corteza de asociación: áreas primarias, unimodales y heteromodales (Mesulam)'
     ],
     associatedStructureIds: [
-      'corteza-frontal',
-      'corteza-parietal',
-      'corteza-temporal',
-      'corteza-occipital',
+      'lobulo-frontal-izquierdo',
+      'lobulo-frontal-derecho',
+      'lobulo-parietal-izquierdo',
+      'lobulo-temporal-izquierdo',
+      'lobulo-occipital',
+      'hipocampo',
+      'amigdala',
       'talamo',
       'hipotalamo',
-      'ganglios-base',
-      'sistema-limbico',
-      'tronco-encefalico',
+      'ganglios-de-la-base',
+      'cuerpo-calloso',
       'cerebelo',
-      'cuerpo-calloso'
+      'tronco-encefalico'
     ]
   },
   {
@@ -57,10 +59,11 @@ export const COURSE_UNITS: CourseUnit[] = [
       'Pérdida de conciencia y Escala de Coma de Glasgow (GCS) como pronóstico'
     ],
     associatedStructureIds: [
-      'corteza-prefrontal-dorsolateral',
-      'corteza-orbitofrontal',
-      'polo-temporal',
-      'formacion-reticular'
+      'lobulo-frontal-izquierdo',
+      'lobulo-frontal-derecho',
+      'lobulo-temporal-izquierdo',
+      'lobulo-temporal-derecho',
+      'tronco-encefalico'
     ]
   },
   {
@@ -82,13 +85,13 @@ export const COURSE_UNITS: CourseUnit[] = [
       'Fenómeno de diásquisis (desactivación remota por pérdida de aferencias)'
     ],
     associatedStructureIds: [
-      'corteza-frontal',
-      'corteza-parietal',
-      'corteza-temporal',
-      'corteza-occipital',
-      'area-broca',
-      'area-wernicke',
-      'giro-angular'
+      'lobulo-frontal-izquierdo',
+      'lobulo-frontal-derecho',
+      'lobulo-parietal-izquierdo',
+      'lobulo-parietal-derecho',
+      'lobulo-temporal-izquierdo',
+      'lobulo-temporal-derecho',
+      'lobulo-occipital'
     ]
   },
   {
@@ -109,7 +112,8 @@ export const COURSE_UNITS: CourseUnit[] = [
     associatedStructureIds: [
       'hipocampo',
       'amigdala',
-      'corteza-temporal'
+      'lobulo-temporal-izquierdo',
+      'lobulo-temporal-derecho'
     ]
   },
   {
@@ -130,10 +134,9 @@ export const COURSE_UNITS: CourseUnit[] = [
     ],
     associatedStructureIds: [
       'hipocampo',
-      'corteza-entorrinal',
-      'corteza-prefrontal-dorsolateral',
-      'corteza-orbitofrontal',
-      'sustancia-negra'
+      'lobulo-temporal-izquierdo',
+      'lobulo-frontal-izquierdo',
+      'ganglios-de-la-base'
     ]
   }
 ];

@@ -29,50 +29,53 @@ export const CourseNavigation: React.FC = () => {
   const filteredStructures = ANATOMICAL_STRUCTURES.filter((s) => {
     if (levelFilter === 'todos') return true;
     if (levelFilter === 'corteza') return s.level === 'telencefalo_corteza';
+    if (levelFilter === 'limbico') {
+      return s.hierarchy === 'limbica' || s.id === 'hipocampo' || s.id === 'amigdala' || s.id === 'hipotalamo' || s.id === 'cuerpo-calloso';
+    }
     if (levelFilter === 'subcortical') return s.level === 'telencefalo_subcortical' || s.level === 'diencefalo';
     if (levelFilter === 'tronco_cerebelo') return s.level === 'tronco_encefalico' || s.level === 'cerebelo';
     return true;
   });
 
   return (
-    <aside className="w-full md:w-80 lg:w-84 h-full bg-slate-900/90 backdrop-blur-xl border-r border-slate-800 flex flex-col z-20 text-slate-200">
+    <aside className="w-full md:w-80 lg:w-84 h-full bg-[#faf8f5] backdrop-blur-xl border-r border-[#e6e1d6] flex flex-col z-20 text-slate-800 font-sans">
       {/* Search Bar Trigger */}
-      <div className="p-3 border-b border-slate-800 bg-slate-950/40">
+      <div className="p-3 border-b border-[#e8e2d5] bg-white">
         <button
           onClick={() => setIsSearchOpen(true)}
-          className="w-full flex items-center justify-between px-3 py-2 bg-slate-800/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 rounded-xl border border-slate-700/60 text-xs transition-all shadow-inner"
+          className="w-full flex items-center justify-between px-3 py-2 bg-[#f4efe4] hover:bg-[#ede7da] text-slate-600 hover:text-slate-900 rounded-xl border border-[#ded7c8] text-xs transition-all shadow-sm"
         >
           <span className="flex items-center gap-2">
-            <Search className="w-3.5 h-3.5 text-sky-400" />
-            <span>Buscar estructura, síndrome o concepto...</span>
+            <Search className="w-3.5 h-3.5 text-amber-700" />
+            <span className="font-medium">Buscar estructura, síndrome...</span>
           </span>
-          <kbd className="text-[10px] bg-slate-900 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">⌘K</kbd>
+          <kbd className="text-[10px] bg-white text-slate-500 font-mono px-1.5 py-0.5 rounded border border-[#d6cfbe]">⌘K</kbd>
         </button>
       </div>
 
       {/* Navigation Sub-Tabs */}
-      <div className="flex border-b border-slate-800 bg-slate-950/20 p-1">
+      <div className="flex border-b border-[#e8e2d5] bg-[#f5f1e8] p-1">
         <button
           onClick={() => setActiveTab('unidades')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg transition-all ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-bold rounded-lg transition-all ${
             activeTab === 'unidades'
-              ? 'bg-slate-800 text-sky-400 shadow-md'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'bg-white text-amber-900 shadow-sm border border-[#d8d1c2]'
+              : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          <GraduationCap className="w-3.5 h-3.5" />
-          <span>Unidades del Curso</span>
+          <GraduationCap className="w-3.5 h-3.5 text-amber-700" />
+          <span>Unidades ({COURSE_UNITS.length})</span>
         </button>
         <button
           onClick={() => setActiveTab('estructuras')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg transition-all ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-bold rounded-lg transition-all ${
             activeTab === 'estructuras'
-              ? 'bg-slate-800 text-sky-400 shadow-md'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'bg-white text-amber-900 shadow-sm border border-[#d8d1c2]'
+              : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          <Layers className="w-3.5 h-3.5" />
-          <span>Atlas Anatómico</span>
+          <Layers className="w-3.5 h-3.5 text-amber-700" />
+          <span>Estructuras ({ANATOMICAL_STRUCTURES.length})</span>
         </button>
       </div>
 
@@ -86,8 +89,8 @@ export const CourseNavigation: React.FC = () => {
                 key={unit.id}
                 className={`rounded-xl border transition-all overflow-hidden ${
                   isSelected
-                    ? 'bg-slate-800/90 border-sky-500/70 shadow-lg shadow-sky-500/5'
-                    : 'bg-slate-950/40 border-slate-800/80 hover:border-slate-700'
+                    ? 'bg-white border-amber-500 shadow-sm ring-1 ring-amber-400'
+                    : 'bg-white border-[#e6e1d6] hover:border-[#ded7c8]'
                 }`}
               >
                 <button
@@ -95,32 +98,32 @@ export const CourseNavigation: React.FC = () => {
                   className="w-full p-3 text-left flex items-start justify-between gap-2"
                 >
                   <div>
-                    <span className="text-[10px] font-bold text-sky-400 tracking-wider uppercase">
+                    <span className="text-[10px] font-bold text-amber-800 tracking-wider uppercase">
                       Unidad {unit.unitNumber}
                     </span>
-                    <h4 className="text-xs font-bold text-slate-100 leading-snug mt-0.5">
+                    <h4 className="text-xs font-bold text-slate-900 leading-snug mt-0.5">
                       {unit.title}
                     </h4>
-                    <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
+                    <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
                       {unit.description}
                     </p>
                   </div>
-                  <ChevronRight className={`w-4 h-4 text-slate-500 shrink-0 transition-transform ${isSelected ? 'rotate-90 text-sky-400' : ''}`} />
+                  <ChevronRight className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${isSelected ? 'rotate-90 text-amber-700' : ''}`} />
                 </button>
 
                 {isSelected && (
-                  <div className="px-3 pb-3 pt-1 border-t border-slate-800/60 bg-slate-900/60 text-[11px] space-y-2">
-                    <div className="text-slate-400 font-medium flex items-center gap-1.5">
-                      <BookOpen className="w-3 h-3 text-sky-400" />
+                  <div className="px-3 pb-3 pt-1 border-t border-[#f0ede6] bg-[#fbf9f5] text-[11px] space-y-2">
+                    <div className="text-slate-500 font-medium flex items-center gap-1.5">
+                      <BookOpen className="w-3 h-3 text-amber-700" />
                       <span>Fuente: {unit.fileSource}</span>
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] uppercase font-semibold text-slate-500">Temas Clave:</span>
+                      <span className="text-[10px] uppercase font-bold text-slate-700">Temas Centrales:</span>
                       <ul className="space-y-1">
                         {unit.keyTopics.slice(0, 4).map((topic, idx) => (
-                          <li key={idx} className="flex items-start gap-1.5 text-slate-300">
-                            <span className="text-sky-400 font-bold">•</span>
+                          <li key={idx} className="flex items-start gap-1.5 text-slate-600">
+                            <span className="text-amber-700 font-black">•</span>
                             <span>{topic}</span>
                           </li>
                         ))}
@@ -128,8 +131,8 @@ export const CourseNavigation: React.FC = () => {
                     </div>
 
                     <div className="pt-1">
-                      <span className="text-[10px] uppercase font-semibold text-slate-500 block mb-1.5">
-                        Estructuras Vinculadas:
+                      <span className="text-[10px] uppercase font-bold text-slate-700 block mb-1.5">
+                        Estructuras en Maqueta:
                       </span>
                       <div className="flex flex-wrap gap-1">
                         {unit.associatedStructureIds.map((sId) => {
@@ -139,14 +142,15 @@ export const CourseNavigation: React.FC = () => {
                           return (
                             <button
                               key={sId}
-                              onClick={() => selectStructure(struct.id)}
-                              className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
+                              onClick={() => selectStructure(isStructActive ? null : struct.id)}
+                              className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all flex items-center gap-1 ${
                                 isStructActive
-                                  ? 'bg-sky-500 text-slate-950 font-bold'
-                                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
+                                  ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400 scale-105'
+                                  : 'bg-[#ede7da] text-slate-800 hover:bg-[#e2dacb]'
                               }`}
                             >
-                              {struct.name}
+                              {isStructActive && <span>📍</span>}
+                              <span>{struct.name}</span>
                             </button>
                           );
                         })}
@@ -164,21 +168,22 @@ export const CourseNavigation: React.FC = () => {
       {activeTab === 'estructuras' && (
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Filter Pills */}
-          <div className="p-2 border-b border-slate-800 bg-slate-950/30 flex items-center gap-1 overflow-x-auto no-scrollbar text-[11px]">
-            <Filter className="w-3 h-3 text-slate-500 ml-1 shrink-0" />
+          <div className="p-2 border-b border-[#e8e2d5] bg-white flex items-center gap-1 overflow-x-auto no-scrollbar text-[11px]">
+            <Filter className="w-3 h-3 text-slate-400 ml-1 shrink-0" />
             {[
               { id: 'todos', label: 'Todos' },
               { id: 'corteza', label: 'Corteza' },
+              { id: 'limbico', label: 'Sistema Límbico' },
               { id: 'subcortical', label: 'Subcortical' },
               { id: 'tronco_cerebelo', label: 'Tronco/Cerebelo' },
             ].map((f) => (
               <button
                 key={f.id}
                 onClick={() => setLevelFilter(f.id)}
-                className={`px-2 py-0.5 rounded-md whitespace-nowrap transition-colors ${
+                className={`px-2 py-0.5 rounded-md whitespace-nowrap transition-colors font-semibold ${
                   levelFilter === f.id
-                    ? 'bg-sky-500/20 text-sky-300 font-semibold border border-sky-500/40'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {f.label}
@@ -194,33 +199,42 @@ export const CourseNavigation: React.FC = () => {
               return (
                 <button
                   key={struct.id}
-                  onClick={() => selectStructure(struct.id)}
+                  onClick={() => selectStructure(isSelected ? null : struct.id)}
                   className={`w-full p-2.5 rounded-xl text-left flex items-center justify-between gap-2 transition-all ${
                     isSelected
-                      ? 'bg-sky-500/20 border border-sky-500/60 text-white shadow-md'
-                      : 'bg-slate-950/30 border border-slate-800/60 hover:bg-slate-800/70 hover:border-slate-700 text-slate-300'
+                      ? 'bg-amber-50 border-2 border-amber-600 text-slate-900 shadow-md ring-2 ring-amber-400/40'
+                      : 'bg-white border border-[#e6e1d6] hover:bg-[#faf7f0] text-slate-700'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <span
-                      className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
+                      className="w-3 h-3 rounded-full shrink-0 shadow-sm ring-1 ring-black/10"
                       style={{ backgroundColor: struct.color }}
                     />
                     <div className="min-w-0">
-                      <span className="text-xs font-semibold block truncate">
-                        {struct.name}
-                      </span>
-                      <span className="text-[10px] text-slate-400 block truncate">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-xs font-black block truncate text-slate-900">
+                          {struct.name}
+                        </span>
+                        {isSelected && (
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-600 text-white font-black uppercase">
+                            Activo
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[10px] text-slate-500 block truncate font-medium">
                         {struct.lobe.toUpperCase()} • {struct.hemisphere}
                       </span>
                     </div>
                   </div>
 
-                  {isMastered && (
-                    <span title="Dominado">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    </span>
-                  )}
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {isMastered && (
+                      <span title="Concepto dominado">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      </span>
+                    )}
+                  </div>
                 </button>
               );
             })}
@@ -229,16 +243,16 @@ export const CourseNavigation: React.FC = () => {
       )}
 
       {/* Progress Footer */}
-      <div className="p-3 border-t border-slate-800 bg-slate-950/60 flex items-center justify-between text-xs">
+      <div className="p-3 border-t border-[#e8e2d5] bg-white flex items-center justify-between text-xs">
         <div className="flex items-center gap-2">
-          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-          <span className="text-slate-300 text-[11px]">
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+          <span className="text-slate-700 font-medium text-[11px]">
             {masteredStructureIds.length} de {ANATOMICAL_STRUCTURES.length} dominados
           </span>
         </div>
-        <div className="w-20 bg-slate-800 h-1.5 rounded-full overflow-hidden">
+        <div className="w-20 bg-[#ede7da] h-1.5 rounded-full overflow-hidden">
           <div
-            className="bg-emerald-400 h-full rounded-full transition-all duration-500"
+            className="bg-emerald-600 h-full rounded-full transition-all duration-500"
             style={{
               width: `${(masteredStructureIds.length / ANATOMICAL_STRUCTURES.length) * 100}%`
             }}

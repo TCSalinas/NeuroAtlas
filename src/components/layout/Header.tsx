@@ -10,7 +10,8 @@ import {
   FileSpreadsheet,
   GraduationCap,
   Activity,
-  Sparkles
+  Sparkles,
+  Scissors
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -27,6 +28,7 @@ export const Header: React.FC = () => {
 
   const views: { id: ActiveAppView; label: string; icon: any }[] = [
     { id: 'atlas3d', label: 'Cerebro 3D', icon: Brain },
+    { id: 'cortes', label: 'Cortes Clásicos', icon: Scissors },
     { id: 'vascular', label: 'Territorios ACV', icon: Activity },
     { id: 'citoarquitectura', label: 'Citoarquitectura', icon: Layers },
     { id: 'demencias', label: 'Matriz Demencias', icon: FileSpreadsheet },
@@ -35,27 +37,27 @@ export const Header: React.FC = () => {
   ];
 
   return (
-    <header className="h-16 bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 px-4 md:px-6 flex items-center justify-between gap-4 z-30 select-none">
+    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e6e1d6] px-4 md:px-6 flex items-center justify-between gap-4 z-30 select-none shadow-sm">
       {/* Brand */}
       <div className="flex items-center gap-3 shrink-0">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center shadow-md shadow-amber-500/10 text-white">
           <Brain className="w-5 h-5" />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-base font-black tracking-tight text-white flex items-center gap-1.5">
+            <h1 className="text-base font-bold tracking-tight text-slate-900 flex items-center gap-1.5 font-sans">
               NeuroAtlas
-              <span className="text-[10px] px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-400 border border-sky-500/40 font-mono font-normal">v1.0</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 font-mono font-normal">v1.0</span>
             </h1>
           </div>
-          <p className="text-[10px] text-slate-400 hidden sm:block">
+          <p className="text-[10px] text-slate-500 hidden sm:block">
             Neuropsicología Clínica • UDP (PSI4436)
           </p>
         </div>
       </div>
 
-      {/* Mode Navigation Tabs */}
-      <nav className="flex items-center gap-1 bg-slate-950/50 p-1 rounded-xl border border-slate-800/80 overflow-x-auto no-scrollbar">
+      {/* Mode Navigation Tabs in Warm Pastel Style */}
+      <nav className="flex items-center gap-1 bg-[#f4f0e8] p-1 rounded-xl border border-[#e6e1d6] overflow-x-auto no-scrollbar">
         {views.map((v) => {
           const Icon = v.icon;
           const isActive = activeView === v.id;
@@ -65,11 +67,11 @@ export const Header: React.FC = () => {
               onClick={() => setActiveView(v.id)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
                 isActive
-                  ? 'bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                  ? 'bg-white text-slate-900 shadow-sm border border-[#dfd9ce]'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
               }`}
             >
-              <Icon className="w-3.5 h-3.5" />
+              <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-amber-600' : 'text-slate-500'}`} />
               <span>{v.label}</span>
             </button>
           );
@@ -80,19 +82,19 @@ export const Header: React.FC = () => {
       <div className="flex items-center gap-3 shrink-0">
         <button
           onClick={() => setIsSearchOpen(true)}
-          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/70 hover:bg-slate-800 border border-slate-700/60 text-slate-300 rounded-xl text-xs transition-colors"
+          className="flex items-center gap-2 px-3 py-1.5 bg-[#f4f0e8] hover:bg-white border border-[#e6e1d6] text-slate-700 hover:text-slate-900 rounded-xl text-xs transition-colors shadow-sm"
           title="Buscar en el Atlas (⌘K)"
         >
-          <Search className="w-3.5 h-3.5 text-sky-400" />
-          <span className="hidden md:inline text-[11px]">Buscar</span>
-          <kbd className="hidden lg:inline text-[9px] bg-slate-900 text-slate-400 px-1 rounded border border-slate-700 font-mono">⌘K</kbd>
+          <Search className="w-3.5 h-3.5 text-amber-600" />
+          <span className="hidden md:inline text-[11px] font-medium">Buscar</span>
+          <kbd className="hidden lg:inline text-[9px] bg-white text-slate-500 px-1 rounded border border-slate-300 font-mono">⌘K</kbd>
         </button>
 
-        {/* Progress Pill */}
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-emerald-950/30 border border-emerald-900/50 rounded-xl text-emerald-300 text-xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+        {/* Progress Pill in Warm Pastel */}
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs shadow-sm">
+          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
           <span className="font-bold">{progressPercent}%</span>
-          <span className="text-[10px] text-emerald-400/80 hidden lg:inline">Dominado</span>
+          <span className="text-[10px] text-emerald-700 hidden lg:inline">Dominado</span>
         </div>
       </div>
     </header>

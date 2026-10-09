@@ -26,6 +26,8 @@ export interface AcademicSource {
   type: 'apunte_clase' | 'presentacion_catedra' | 'fuente_complementaria';
   directQuoteOrSummary: string;
   externalUrl?: string;
+  figureUrl?: string;
+  figureCaption?: string;
 }
 
 export interface ClinicalCorrelate {
@@ -54,7 +56,7 @@ export interface AnatomicalStructure {
   meshPosition: [number, number, number];
   meshScale: [number, number, number];
   meshRotation?: [number, number, number];
-  meshType?: 'sphere' | 'box' | 'cylinder' | 'ellipsoid' | 'complex';
+  meshType?: 'sphere' | 'box' | 'cylinder' | 'ellipsoid' | 'complex' | 'cerebellum' | 'callosum' | 'occipital' | 'thalamus' | 'hippocampus' | 'amygdala' | 'hypothalamus' | 'basal_ganglia';
 
   // Pedagogical & Neuropsychological content
   overview: string;
@@ -114,6 +116,7 @@ export interface QuizQuestion {
 
 export type ActiveAppView = 
   | 'atlas3d'
+  | 'cortes'
   | 'vascular'
   | 'citoarquitectura'
   | 'demencias'

@@ -10,13 +10,14 @@ import { CorticalLayersView } from './components/study/CorticalLayersView';
 import { DemenciasMatrixView } from './components/study/DemenciasMatrixView';
 import { QuizView } from './components/study/QuizView';
 import { AccessibleAtlasView } from './components/study/AccessibleAtlasView';
+import { ClassicalSlicesView } from './components/study/ClassicalSlicesView';
 import { OmniboxSearch } from './components/study/OmniboxSearch';
 
 export const App: React.FC = () => {
   const { activeView } = useNeuroStore();
 
   return (
-    <div className="w-screen h-screen flex flex-col bg-[#0b0f19] text-slate-100 overflow-hidden font-sans">
+    <div className="w-screen h-screen flex flex-col bg-[#faf8f5] text-slate-800 overflow-hidden font-sans">
       {/* Top Application Bar */}
       <Header />
 
@@ -34,6 +35,7 @@ export const App: React.FC = () => {
             </div>
           )}
 
+          {activeView === 'cortes' && <ClassicalSlicesView />}
           {activeView === 'vascular' && <VascularTerritoriesView />}
           {activeView === 'citoarquitectura' && <CorticalLayersView />}
           {activeView === 'demencias' && <DemenciasMatrixView />}

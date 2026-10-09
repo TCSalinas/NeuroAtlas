@@ -16,7 +16,7 @@ export const VASCULAR_TERRITORIES: Record<VascularTerritoryId, VascularTerritory
     id: 'aca',
     name: 'Arteria Cerebral Anterior (ACA)',
     artery: 'Arteria cerebral anterior (ramas corticales y callosas)',
-    colorHex: '#38bdf8', // Sky blue
+    colorHex: '#7dd3fc', // Sky blue
     irrigatedRegions: [
       'Superficie medial del lóbulo frontal y parietal',
       'Corteza motora y somatosensorial primaria correspondiente a miembros inferiores (piernas y pies)',
@@ -42,7 +42,7 @@ export const VASCULAR_TERRITORIES: Record<VascularTerritoryId, VascularTerritory
     id: 'acm_izq',
     name: 'Arteria Cerebral Media Izquierda (ACM Dominante)',
     artery: 'Arteria cerebral media izquierda (tronco y divisiones superior/inferior)',
-    colorHex: '#f43f5e', // Rose/Red
+    colorHex: '#fca5a5', // Rose/Red
     irrigatedRegions: [
       'Convexidad lateral completa del hemisferio izquierdo (frontal lateral, parietal lateral, temporal superior y medio)',
       'Área de Broca (pars opercularis y triangularis)',
@@ -70,7 +70,7 @@ export const VASCULAR_TERRITORIES: Record<VascularTerritoryId, VascularTerritory
     id: 'acm_der',
     name: 'Arteria Cerebral Media Derecha (ACM No Dominante)',
     artery: 'Arteria cerebral media derecha (tronco y divisiones)',
-    colorHex: '#f59e0b', // Amber/Orange
+    colorHex: '#fde047', // Amber/Orange
     irrigatedRegions: [
       'Convexidad lateral completa del hemisferio derecho (frontal, parietal posterior, temporal)',
       'Corteza parietal posterior y unión temporoparietal derecha (red atencional visuoespacial)',
@@ -96,7 +96,7 @@ export const VASCULAR_TERRITORIES: Record<VascularTerritoryId, VascularTerritory
     id: 'acp',
     name: 'Arteria Cerebral Posterior (ACP)',
     artery: 'Arteria cerebral posterior (ramas calcarinas, temporales y talámicas)',
-    colorHex: '#10b981', // Emerald green
+    colorHex: '#86efac', // Emerald green
     irrigatedRegions: [
       'Lóbulo occipital medial y polo occipital (corteza visual primaria V1 y áreas secundarias)',
       'Superficie inferomedial del lóbulo temporal (giro parahipocámpico, hipocampo posterior, giro fusiforme)',
@@ -122,7 +122,7 @@ export const VASCULAR_TERRITORIES: Record<VascularTerritoryId, VascularTerritory
     id: 'tronco_basilar',
     name: 'Arteria Basilar y Vertebrales (Circulación Posterior)',
     artery: 'Sistema vértebro-basilar',
-    colorHex: '#8b5cf6', // Violet
+    colorHex: '#c4b5fd', // Violet
     irrigatedRegions: [
       'Tronco encefálico (bulbo, puente y mesencéfalo)',
       'Formación reticular activadora ascendente',
@@ -145,7 +145,7 @@ export const VASCULAR_TERRITORIES: Record<VascularTerritoryId, VascularTerritory
     id: 'perforantes',
     name: 'Arterias Perforantes / Lenticuloestriadas (Infarto Lacunar)',
     artery: 'Ramas penetrantes profundas de ACM y basilar',
-    colorHex: '#ec4899', // Pink
+    colorHex: '#f9a8d4', // Pink
     irrigatedRegions: [
       'Cápsula interna (brazo posterior y rodilla)',
       'Ganglios de la base (putamen, caudado)',

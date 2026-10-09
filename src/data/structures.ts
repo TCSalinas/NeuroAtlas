@@ -13,10 +13,10 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [4, 6, 8, 9, 10, 11, 44, 45, 46, 47],
     hierarchy: 'asociacion_heteromodal',
     vascularTerritory: 'acm_izq',
-    color: '#ef4444', // Red
+    color: '#e07a5f', // Pastel Terracotta Coral
     isDeepStructure: false,
-    meshPosition: [-0.9, 0.45, 0.8],
-    meshScale: [1.1, 0.95, 1.3],
+    meshPosition: [-0.48, 0.42, 0.46],
+    meshScale: [1.02, 0.88, 1.15],
     meshType: 'complex',
     overview: 'Estructura encefálica anterior más desarrollada filogenéticamente. En el hemisferio izquierdo alberga los centros motores del lenguaje (Broca), la programación ejecutiva, el control atencional y la autorregulación.',
     anatomicalLocation: 'Porción anterior de la cavidad craneal, delimitado posteriormente por la cisura central (de Rolando) e inferiormente por la cisura lateral (de Silvio).',
@@ -66,7 +66,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'NEUROPATOLOGIA TEC Y ACV 2022.pdf',
         slideOrPage: 'Diapositiva 50: Left MCA stem',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'Déficits de Language impairments, apraxias, acalculia, deficits de memoria, pensamiento concreto, rigidez cognitiva, deficits memoria trabajo, habla interna, depression.'
+        directQuoteOrSummary: 'Déficits de Language impairments, apraxias, acalculia, deficits de memoria, pensamiento concreto, rigidez cognitiva, deficits memoria trabajo, habla interna, depression.',
+        figureUrl: './assets/figures/slide_acv_mca_izq.png',
+        figureCaption: 'Neuroimagen TAC y correlato de ACV en territorio ACM izquierda: compromiso frontotemporal y afasia motora.'
       },
       {
         documentTitle: 'Apuntes Neuroanatomía UFRO',
@@ -88,10 +90,10 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [4, 6, 8, 9, 10, 11, 44, 45, 46, 47],
     hierarchy: 'asociacion_heteromodal',
     vascularTerritory: 'acm_der',
-    color: '#f97316', // Orange
+    color: '#f4a261', // Pastel Apricot Peach
     isDeepStructure: false,
-    meshPosition: [0.9, 0.45, 0.8],
-    meshScale: [1.1, 0.95, 1.3],
+    meshPosition: [0.48, 0.42, 0.46],
+    meshScale: [1.02, 0.88, 1.15],
     meshType: 'complex',
     overview: 'Lóbulo anterior del hemisferio derecho, fundamental en la modulación pragmática y prosódica del lenguaje, la empatía, el monitoreo atencional sostenido y la regulación de la afectividad.',
     anatomicalLocation: 'Porción anterior derecha del neurocráneo.',
@@ -131,7 +133,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'NEUROPATOLOGIA TEC Y ACV 2022.pdf',
         slideOrPage: 'Diapositiva 52 y 53: Right MCA',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'Conductas frontales: apatia, dependencia ambiental, humor heboide, hipomania... deficits pragmaticos de lenguaje, cambios animicos.'
+        directQuoteOrSummary: 'Conductas frontales: apatia, dependencia ambiental, humor heboide, hipomania... deficits pragmaticos de lenguaje, cambios animicos.',
+        figureUrl: './assets/figures/slide_asociacion.png',
+        figureCaption: 'Cátedra: Cortezas de asociación heteromodal prefrontal y redes socioemocionales.'
       }
     ]
   },
@@ -146,10 +150,10 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [1, 2, 3, 5, 7, 39, 40],
     hierarchy: 'asociacion_heteromodal',
     vascularTerritory: 'acm_izq',
-    color: '#3b82f6', // Blue
+    color: '#6a8caf', // Pastel Slate Blue
     isDeepStructure: false,
-    meshPosition: [-0.95, 0.7, -0.4],
-    meshScale: [1.05, 0.9, 1.1],
+    meshPosition: [-0.48, 0.55, -0.26],
+    meshScale: [1.02, 0.85, 1.05],
     meshType: 'complex',
     overview: 'Centro superior de integración somatosensorial, procesamiento simbólico multimodal, cálculo matemático, lectoescritura y praxias motoras.',
     anatomicalLocation: 'Situado detrás de la cisura central de Rolando y sobre la cisura de Silvio; limitado posteriormente por la cisura parietooccipital.',
@@ -195,7 +199,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'NEUROPATOLOGIA TEC Y ACV 2022.pdf',
         slideOrPage: 'Diapositiva 50: Left MCA stem',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'Deficits: apraxias, acalculia, deficits de memoria, pensamiento concreto.'
+        directQuoteOrSummary: 'Deficits: apraxias, acalculia, deficits de memoria, pensamiento concreto.',
+        figureUrl: './assets/figures/slide_brodmann.png',
+        figureCaption: 'Mapa de Brodmann: Áreas parietales 1, 2, 3 (S1), 5, 7, 39 (giro angular) y 40 (supramarginal).'
       }
     ]
   },
@@ -210,10 +216,10 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [1, 2, 3, 5, 7, 39, 40],
     hierarchy: 'asociacion_heteromodal',
     vascularTerritory: 'acm_der',
-    color: '#06b6d4', // Cyan
+    color: '#76c7c0', // Pastel Seafoam Aqua
     isDeepStructure: false,
-    meshPosition: [0.95, 0.7, -0.4],
-    meshScale: [1.05, 0.9, 1.1],
+    meshPosition: [0.48, 0.55, -0.26],
+    meshScale: [1.02, 0.85, 1.05],
     meshType: 'complex',
     overview: 'Estructura cardinal de la red atencional visuoespacial y del esquema corporal global. Su lesión genera el cuadro neuropsicológico más dramático de desconexión atencional: la heminegligencia espacial izquierda.',
     anatomicalLocation: 'Lóbulo parietal posterosuperior derecho.',
@@ -258,7 +264,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'NEUROPATOLOGIA TEC Y ACV 2022.pdf',
         slideOrPage: 'Diapositiva 53: Right MCA',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'Hemi-negligencia, hemi-inatencion, deficits visoconstructivos, apraxia motora, deficits de memoria, anosognosia.'
+        directQuoteOrSummary: 'Hemi-negligencia, hemi-inatencion, deficits visoconstructivos, apraxia motora, deficits de memoria, anosognosia.',
+        figureUrl: './assets/figures/slide_acv_mca_der.png',
+        figureCaption: 'Neuroimagen TAC de ACV en territorio ACM derecha: sustrato anatómico de heminegligencia espacial izquierda.'
       }
     ]
   },
@@ -273,10 +281,10 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [41, 42, 22, 21, 20, 38],
     hierarchy: 'asociacion_heteromodal',
     vascularTerritory: 'acm_izq',
-    color: '#8b5cf6', // Purple
+    color: '#a390e4', // Pastel Lavender
     isDeepStructure: false,
-    meshPosition: [-1.05, -0.2, 0.1],
-    meshScale: [0.95, 0.85, 1.3],
+    meshPosition: [-0.85, -0.12, 0.08],
+    meshScale: [0.85, 0.75, 1.15],
     meshType: 'complex',
     overview: 'Lóbulo lateral inferior implicado de forma decisiva en la audición, decodificación fonológica, comprensión del lenguaje oral (Wernicke), memoria semántica conceptual y memoria verbal episódica en su cara medial.',
     anatomicalLocation: 'Fosa craneal media izquierda, por debajo de la cisura lateral de Silvio.',
@@ -323,7 +331,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'nauropatologia Ev Neuropsicologica 2020 Demencia y otros.pdf',
         slideOrPage: 'Diapositiva 28: DLFT Demencia Semántica',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'DEMENCIA SEMÁNTICA: ATROFIA LÓBULO TEMPORAL (MEMORIA SEMÁNTICA, ENCONTRAR PALABRAS Y LENGUAJE COMPRENSIVO).'
+        directQuoteOrSummary: 'DEMENCIA SEMÁNTICA: ATROFIA LÓBULO TEMPORAL (MEMORIA SEMÁNTICA, ENCONTRAR PALABRAS Y LENGUAJE COMPRENSIVO).',
+        figureUrl: './assets/figures/slide_acv_mca_izq.png',
+        figureCaption: 'Compromiso vascular de ACM izquierda y atrofia lobar temporal (área de Wernicke y polo temporal).'
       }
     ]
   },
@@ -338,10 +348,10 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [41, 42, 22, 21, 20, 38],
     hierarchy: 'asociacion_heteromodal',
     vascularTerritory: 'acm_der',
-    color: '#a855f7', // Violet
+    color: '#c490d1', // Pastel Lilac Orchid
     isDeepStructure: false,
-    meshPosition: [1.05, -0.2, 0.1],
-    meshScale: [0.95, 0.85, 1.3],
+    meshPosition: [0.85, -0.12, 0.08],
+    meshScale: [0.85, 0.75, 1.15],
     meshType: 'complex',
     overview: 'Lóbulo especializado en el reconocimiento auditivo no verbal (música, timbres, sonidos ambientales), percepción de la prosodia emocional y memoria visual/no verbal.',
     anatomicalLocation: 'Fosa craneal media derecha.',
@@ -379,7 +389,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'NEUROPATOLOGIA TEC Y ACV 2022.pdf',
         slideOrPage: 'Diapositivas 53 y 54: Right MCA & PCA',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'Aprosodia receptiva, cambios animicos [ansiedad y depresion], agnosias visuales.'
+        directQuoteOrSummary: 'Aprosodia receptiva, cambios animicos [ansiedad y depresion], agnosias visuales.',
+        figureUrl: './assets/figures/slide_areas_funcionales.png',
+        figureCaption: 'Áreas funcionales de corteza: procesamiento auditivo no verbal, prosodia y reconocimiento facial temporal.'
       }
     ]
   },
@@ -394,11 +406,11 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [17, 18, 19],
     hierarchy: 'primaria_sensoriomotora',
     vascularTerritory: 'acp',
-    color: '#10b981', // Emerald
+    color: '#84a98c', // Pastel Sage Green
     isDeepStructure: false,
-    meshPosition: [0, 0.35, -1.3],
-    meshScale: [1.8, 1.1, 1.1],
-    meshType: 'complex',
+    meshPosition: [0, 0.35, -0.96],
+    meshScale: [1.32, 0.85, 0.98],
+    meshType: 'occipital',
     overview: 'Polo posterior del cerebro humano dedicado íntegramente al procesamiento de la información visual. Alberga la corteza estriada (V1) y las áreas extraestriadas de asociación.',
     anatomicalLocation: 'Polo posterior del cráneo sobre la tienda del cerebelo (tentorio).',
     organizationAndSubdivisions: [
@@ -439,14 +451,18 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'NEUROPATOLOGIA TEC Y ACV 2022.pdf',
         slideOrPage: 'Diapositiva 51 y 54: PCA',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'Deficits visuales, alexia sin agrafia, afasia transcortical, amnesia.'
+        directQuoteOrSummary: 'Deficits visuales, alexia sin agrafia, afasia transcortical, amnesia.',
+        figureUrl: './assets/figures/slide_territorios_vasculares.png',
+        figureCaption: 'Vascularización del lóbulo occipital por Arteria Cerebral Posterior (ACP) y campos visuales.'
       },
       {
         documentTitle: 'Panorámica Neurofuncional',
         fileReference: '-1656795872_Panoramica neurofuncional .pdf',
         slideOrPage: 'Diapositiva 27: Citoarquitectura en Área 17',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'AREA 17: Columnas corticales y seis capas principales en V1, primera área de proyección visual.'
+        directQuoteOrSummary: 'AREA 17: Columnas corticales y seis capas principales en V1, primera área de proyección visual.',
+        figureUrl: './assets/figures/slide_capas_corteza.png',
+        figureCaption: 'Citoarquitectura de la corteza cerebral: seis capas celulares y corteza estriada V1 (Área 17).'
       }
     ]
   },
@@ -463,11 +479,11 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [28, 34],
     hierarchy: 'limbica',
     vascularTerritory: 'acp',
-    color: '#14b8a6', // Teal
+    color: '#52b788', // Pastel Sea-green Mint
     isDeepStructure: true,
-    meshPosition: [0, -0.2, -0.1],
-    meshScale: [1.3, 0.4, 0.7],
-    meshType: 'complex',
+    meshPosition: [0, -0.18, -0.08],
+    meshScale: [1.15, 0.38, 0.65],
+    meshType: 'hippocampus',
     overview: 'Estructura arquicortical curvada en el lóbulo temporal medial. Es la máquina biológica esencial para la consolidación de nueva memoria declarativa (episódica y semántica) y la navegación espacial.',
     anatomicalLocation: 'Suelo del asta temporal del ventrículo lateral en la porción medial del lóbulo temporal.',
     organizationAndSubdivisions: [
@@ -510,14 +526,18 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'nauropatologia Ev Neuropsicologica 2020 Demencia y otros.pdf',
         slideOrPage: 'Diapositiva 23: TNC-M Alzheimer y Diapositiva 33: Tabla 2',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'EA: Atrofia en cortex entorrinal e hipocampal con predominio de pérdida de memoria episódica.'
+        directQuoteOrSummary: 'EA: Atrofia en cortex entorrinal e hipocampal con predominio de pérdida de memoria episódica.',
+        figureUrl: './assets/figures/slide_alzheimer.png',
+        figureCaption: 'Atrofia en corteza entorrinal e hipocampal en Enfermedad de Alzheimer (Escala MTA Scheltens).'
       },
       {
         documentTitle: 'Panorámica Neurofuncional',
         fileReference: '-1656795872_Panoramica neurofuncional .pdf',
         slideOrPage: 'Diapositiva 16: Telencéfalo - Sistema Límbico',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'FIGURE 2.26 The human limbic system: Hippocampus, Fornix, Entorhinal cortex, Mammillary body, Anterior thalamic nucleus.'
+        directQuoteOrSummary: 'FIGURE 2.26 The human limbic system: Hippocampus, Fornix, Entorhinal cortex, Mammillary body, Anterior thalamic nucleus.',
+        figureUrl: './assets/figures/slide_limbico.png',
+        figureCaption: 'Esquema Cátedra: Sistema Límbico y Circuito de Papez (Hipocampo, Fórnix, Cuerpos Mamilares y Núcleo Anterior).'
       }
     ]
   },
@@ -532,11 +552,11 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     brodmannAreas: [34],
     hierarchy: 'limbica',
     vascularTerritory: 'acm_izq',
-    color: '#e11d48', // Crimson
+    color: '#d88c9a', // Pastel Dusty Rose
     isDeepStructure: true,
-    meshPosition: [0, -0.3, 0.25],
-    meshScale: [0.9, 0.45, 0.45],
-    meshType: 'sphere',
+    meshPosition: [0, -0.22, 0.22],
+    meshScale: [0.82, 0.38, 0.38],
+    meshType: 'amygdala',
     overview: 'Conjunto nuclear en forma de almendra situado en el polo anterior del lóbulo temporal. Es el epicentro cerebral para la detección de amenazas, el condicionamiento al miedo y la saliencia emocional de estímulos.',
     anatomicalLocation: 'Profunda en el lóbulo temporal anterior, rostral al hipocampo.',
     organizationAndSubdivisions: [
@@ -573,7 +593,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: 'nauropatologia Ev Neuropsicologica 2020 Demencia y otros.pdf',
         slideOrPage: 'Diapositiva 9: Encefalitis herpética',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'Encefalitis herpética: Afecta lóbulo temporal, hipocampo y amígdala con amnesia y desregulación.'
+        directQuoteOrSummary: 'Encefalitis herpética: Afecta lóbulo temporal, hipocampo y amígdala con amnesia y desregulación.',
+        figureUrl: './assets/figures/slide_limbico.png',
+        figureCaption: 'Complejo nuclear amigdalino y sus conexiones con el sistema límbico y núcleos autónomos.'
       }
     ]
   },
@@ -587,11 +609,11 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     hemisphere: 'bilateral',
     hierarchy: 'no_aplica',
     vascularTerritory: 'acp',
-    color: '#eab308', // Yellow
+    color: '#e6be8a', // Pastel Ochre Buff
     isDeepStructure: true,
-    meshPosition: [0, 0.1, -0.05],
-    meshScale: [0.8, 0.65, 0.75],
-    meshType: 'sphere',
+    meshPosition: [0, 0.08, -0.05],
+    meshScale: [0.75, 0.55, 0.65],
+    meshType: 'thalamus',
     overview: 'Gran masa nuclear ovoide bilateral situada en el diencéfalo. Funciona como la "estación central de peaje" de la corteza: toda la información sensorial (salvo el olfato) hace sinapsis aquí antes de alcanzar la neocorteza.',
     anatomicalLocation: 'A ambos lados del tercer ventrículo, medial a la cápsula interna y dorsal al hipotálamo.',
     organizationAndSubdivisions: [
@@ -630,7 +652,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: '-1656795872_Panoramica neurofuncional .pdf',
         slideOrPage: 'Diapositiva 13: Diencéfalo Tálamo-Hipotálamo y Diapositiva 19 (Fig 5.14)',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'DIENCÉFALO: TÁLAMO-HIPOTÁLAMO. Figure 5.14: Transparent overview of the thalamus in the center of each hemisphere.'
+        directQuoteOrSummary: 'DIENCÉFALO: TÁLAMO-HIPOTÁLAMO. Figure 5.14: Transparent overview of the thalamus in the center of each hemisphere.',
+        figureUrl: './assets/figures/slide_ganglios.png',
+        figureCaption: 'Diencéfalo y núcleos subcorticales: Tálamo en el centro hemisférico y relaciones anatómicas.'
       }
     ]
   },
@@ -644,11 +668,11 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     hemisphere: 'medial',
     hierarchy: 'no_aplica',
     vascularTerritory: 'aca',
-    color: '#f97316', // Orange
+    color: '#f4a261', // Pastel Melon
     isDeepStructure: true,
-    meshPosition: [0, -0.25, 0.15],
-    meshScale: [0.45, 0.35, 0.45],
-    meshType: 'sphere',
+    meshPosition: [0, -0.22, 0.12],
+    meshScale: [0.42, 0.32, 0.42],
+    meshType: 'hypothalamus',
     overview: 'Estructura ventral del diencéfalo que orquesta la homeostasis corporal, coordinando el sistema nervioso autónomo (simpático y parasimpático) y el sistema endocrino a través de la glándula hipófisis.',
     anatomicalLocation: 'Suelo y paredes anteroinferiores del tercer ventrículo, por debajo del surco hipotalámico.',
     organizationAndSubdivisions: [
@@ -686,7 +710,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: '-1656795872_Panoramica neurofuncional .pdf',
         slideOrPage: 'Diapositiva 15: Hipotálamo',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'HIPOTÁLAMO: HOMEOSTASIS - ANS: SED, HAMBRE, FATIGA, TEMPERATURA, RITMOS CIRCADIANOS. SISTEMA ENDOCRINO (HORMONAS).'
+        directQuoteOrSummary: 'HIPOTÁLAMO: HOMEOSTASIS - ANS: SED, HAMBRE, FATIGA, TEMPERATURA, RITMOS CIRCADIANOS. SISTEMA ENDOCRINO (HORMONAS).',
+        figureUrl: './assets/figures/slide_limbico.png',
+        figureCaption: 'Hipotálamo ventral y cuerpos mamilares en el centro de regulación límbica y neuroendocrina.'
       }
     ]
   },
@@ -700,11 +726,11 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     hemisphere: 'bilateral',
     hierarchy: 'no_aplica',
     vascularTerritory: 'perforantes',
-    color: '#6366f1', // Indigo
+    color: '#9381ff', // Pastel Periwinkle
     isDeepStructure: true,
-    meshPosition: [0, 0.15, 0.25],
-    meshScale: [1.2, 0.6, 0.85],
-    meshType: 'complex',
+    meshPosition: [0, 0.12, 0.18],
+    meshScale: [1.1, 0.55, 0.78],
+    meshType: 'basal_ganglia',
     overview: 'Conjunto de masas nucleares subcorticales dispuestas en forma de escudo alrededor del tálamo. Modulan el inicio, ejecución y finalización de programas motores, así como hábitos, aprendizaje procedimental y bucles ejecutivos.',
     anatomicalLocation: 'Profundos en el telencéfalo, laterales al tálamo y delimitados por la cápsula interna.',
     organizationAndSubdivisions: [
@@ -750,7 +776,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: '-1656795872_Panoramica neurofuncional .pdf',
         slideOrPage: 'Diapositiva 19: Ganglios de la base (Figure 5.14)',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'FIGURE 5.14 Transparent overview of the thalamus in the center of each hemisphere, and the basal ganglia looking like a shield and loop (Cd, Put, GP).'
+        directQuoteOrSummary: 'FIGURE 5.14 Transparent overview of the thalamus in the center of each hemisphere, and the basal ganglia looking like a shield and loop (Cd, Put, GP).',
+        figureUrl: './assets/figures/slide_ganglios.png',
+        figureCaption: 'Telencéfalo - Ganglios de la Base: Caudado en forma de C, Putamen y Globo Pálido como escudo.'
       }
     ]
   },
@@ -766,10 +794,10 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     hemisphere: 'medial',
     hierarchy: 'no_aplica',
     vascularTerritory: 'tronco_basilar',
-    color: '#d97706', // Amber dark
+    color: '#c9ada7', // Pastel Warm Sand Taupe
     isDeepStructure: false,
-    meshPosition: [0, -0.9, -0.15],
-    meshScale: [0.65, 1.25, 0.65],
+    meshPosition: [0, -0.85, -0.15],
+    meshScale: [0.60, 1.20, 0.60],
     meshType: 'cylinder',
     overview: 'Tallo conductor indispensable que conecta el cerebro y cerebelo con la médula espinal. Aloja los centros vitales cardiorrespiratorios, la emergencia de casi todos los pares craneales y la formación reticular activadora (alerta y vigilia).',
     anatomicalLocation: 'Fosa craneal posterior, situado ventralmente al cerebelo e inferior al diencéfalo.',
@@ -815,7 +843,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: '-1656795872_Panoramica neurofuncional .pdf',
         slideOrPage: 'Diapositivas 9 y 11: Tallo cerebral',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'TALLO CEREBRAL: MÉDULA, PUENTE, CEREBELO Y CEREBRO MEDIO. Nervios craneanos, formación reticular.'
+        directQuoteOrSummary: 'TALLO CEREBRAL: MÉDULA, PUENTE, CEREBELO Y CEREBRO MEDIO. Nervios craneanos, formación reticular.',
+        figureUrl: './assets/figures/slide_poligono_willis.png',
+        figureCaption: 'Tronco encefálico y vascularización vértebro-basilar (Arteria basilar, cerebelosas y polígono de Willis).'
       },
       {
         documentTitle: 'NEUROPATOLOGIA TEC Y ACV 2022',
@@ -836,11 +866,11 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     hemisphere: 'bilateral',
     hierarchy: 'no_aplica',
     vascularTerritory: 'tronco_basilar',
-    color: '#0284c7', // Sky dark
+    color: '#748cab', // Pastel Denim Blue
     isDeepStructure: false,
-    meshPosition: [0, -0.75, -0.85],
-    meshScale: [1.6, 0.85, 0.95],
-    meshType: 'complex',
+    meshPosition: [0, -0.68, -0.78],
+    meshScale: [1.25, 0.68, 0.78],
+    meshType: 'cerebellum',
     overview: 'Estructura folicular densamente poblada en la fosa posterior (alberga más del 50% de las neuronas de todo el encéfalo). Tradicionalmente visto como coordinador motor, hoy se reconoce su papel crucial en la temporización y el síndrome cognitivo-afectivo cerebeloso.',
     anatomicalLocation: 'Fosa craneal posterior, situado dorsalmente al tronco encefálico y debajo del tentorio.',
     organizationAndSubdivisions: [
@@ -885,7 +915,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: '-1656795872_Panoramica neurofuncional .pdf',
         slideOrPage: 'Diapositiva 31: Functional Areas of the Cerebellum',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'Functional Areas of the Cerebellum: Coordination of movement, balance and equilibrium, posture.'
+        directQuoteOrSummary: 'Functional Areas of the Cerebellum: Coordination of movement, balance and equilibrium, posture.',
+        figureUrl: './assets/figures/slide_areas_funcionales.png',
+        figureCaption: 'Cátedra: Áreas funcionales del cerebelo, coordinación somatomotora y control postural.'
       }
     ]
   },
@@ -901,11 +933,11 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
     hemisphere: 'medial',
     hierarchy: 'no_aplica',
     vascularTerritory: 'aca',
-    color: '#cbd5e1', // Light slate
+    color: '#ede8dc', // Pastel Linen Cream
     isDeepStructure: true,
-    meshPosition: [0, 0.35, -0.05],
-    meshScale: [0.45, 0.25, 1.4],
-    meshType: 'box',
+    meshPosition: [0, 0.22, 0.02],
+    meshScale: [0.85, 0.85, 0.95],
+    meshType: 'callosum',
     overview: 'El mayor haz de sustancia blanca comisural del cerebro humano (>200 millones de axones mielinizados). Interconecta de forma recíproca las áreas homólogas de ambos hemisferios cerebrales.',
     anatomicalLocation: 'Suelo de la cisura longitudinal interhemisférica, tejiendo la parte superior de los ventrículos laterales.',
     organizationAndSubdivisions: [
@@ -948,7 +980,9 @@ export const ANATOMICAL_STRUCTURES: AnatomicalStructure[] = [
         fileReference: '-1656795872_Panoramica neurofuncional .pdf',
         slideOrPage: 'Diapositiva 7: Tractos de asociación neural y comisuras',
         type: 'presentacion_catedra',
-        directQuoteOrSummary: 'TRACTOS DE ASOCIACION NEURAL - TRACTOS / COMISURAS: Coronal section showing Corpus callosum, Cingulum, SLF, ILF.'
+        directQuoteOrSummary: 'TRACTOS DE ASOCIACION NEURAL - TRACTOS / COMISURAS: Coronal section showing Corpus callosum, Cingulum, SLF, ILF.',
+        figureUrl: './assets/figures/slide_tractos.png',
+        figureCaption: 'Cátedra: Corte coronal mostrando cuerpo calloso, fascículo longitudinal y tractos comisurales.'
       }
     ]
   }

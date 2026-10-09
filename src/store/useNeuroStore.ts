@@ -1,10 +1,13 @@
 import { create } from 'zustand';
 import { ActiveAppView, VascularTerritoryId } from '../types/neuro';
 
-interface ClippingState {
+export interface ClippingState {
   enabled: boolean;
+  sagittalEnabled: boolean;
   sagittal: number; // -2 to 2 (X axis)
+  coronalEnabled: boolean;
   coronal: number;  // -2 to 2 (Z axis)
+  axialEnabled: boolean;
   axial: number;    // -2 to 2 (Y axis)
 }
 
@@ -22,6 +25,10 @@ interface NeuroState {
   masteredStructureIds: string[];
   quizAnswers: Record<string, number>;
   cameraPresetTarget: string | null; // Trigger camera transition to specific view
+  selectedClassicalSlice: 'charcot' | 'flechsig' | 'sagital' | null;
+  selectedSliceStructureKey: string | null;
+  dementiaFilterQuery: string | null;
+  selectedLayerNum: number | null;
   
   // Actions
   selectStructure: (id: string | null) => void;
@@ -39,6 +46,10 @@ interface NeuroState {
   recordQuizAnswer: (questionId: string, answerIndex: number) => void;
   resetQuizAnswers: () => void;
   triggerCameraPreset: (presetName: string) => void;
+  setSelectedClassicalSlice: (slice: 'charcot' | 'flechsig' | 'sagital' | null) => void;
+  setSelectedSliceStructureKey: (key: string | null) => void;
+  setDementiaFilterQuery: (query: string | null) => void;
+  setSelectedLayerNum: (layer: number | null) => void;
 }
 
 const LOCAL_STORAGE_KEY_MASTERED = 'neuroatlas_mastered_structures';
@@ -63,7 +74,7 @@ const loadStoredQuiz = (): Record<string, number> => {
 };
 
 export const useNeuroStore = create<NeuroState>((set, get) => ({
-  selectedStructureId: 'lobulo-frontal-izquierdo',
+  selectedStructureId: null,
   hoveredStructureId: null,
   activeView: 'atlas3d',
   activeUnitId: 'unidad-1',
@@ -71,8 +82,11 @@ export const useNeuroStore = create<NeuroState>((set, get) => ({
   isolatedStructureId: null,
   clipping: {
     enabled: false,
+    sagittalEnabled: true,
     sagittal: 0,
+    coronalEnabled: false,
     coronal: 0,
+    axialEnabled: false,
     axial: 0,
   },
   activeVascularFilter: 'all',
@@ -81,9 +95,17 @@ export const useNeuroStore = create<NeuroState>((set, get) => ({
   masteredStructureIds: loadStoredMastered(),
   quizAnswers: loadStoredQuiz(),
   cameraPresetTarget: null,
+  selectedClassicalSlice: null,
+  selectedSliceStructureKey: null,
+  dementiaFilterQuery: null,
+  selectedLayerNum: null,
 
   selectStructure: (id) => {
-    set({ selectedStructureId: id });
+    set((state) => ({
+      selectedStructureId: id,
+      // If deselecting structure (id === null) or switching, reset isolation so 3D view restores
+      isolatedStructureId: id === null ? null : (state.isolatedStructureId === id ? state.isolatedStructureId : null),
+    }));
   },
 
   hoverStructure: (id) => {
@@ -116,15 +138,30 @@ export const useNeuroStore = create<NeuroState>((set, get) => ({
     set({
       clipping: {
         enabled: false,
+        sagittalEnabled: true,
         sagittal: 0,
+        coronalEnabled: false,
         coronal: 0,
+        axialEnabled: false,
         axial: 0,
       }
     });
   },
 
   setActiveVascularFilter: (filter) => {
-    set({ activeVascularFilter: filter });
+    set({
+      activeVascularFilter: filter,
+      // When activating a vascular territory, reset clipping cuts so the entire vascular distribution is intact and visible
+      clipping: {
+        enabled: false,
+        sagittalEnabled: true,
+        sagittal: 0,
+        coronalEnabled: false,
+        coronal: 0,
+        axialEnabled: false,
+        axial: 0,
+      },
+    });
   },
 
   setIsSearchOpen: (open) => {
@@ -173,5 +210,10 @@ export const useNeuroStore = create<NeuroState>((set, get) => ({
     setTimeout(() => {
       set({ cameraPresetTarget: null });
     }, 100);
-  }
+  },
+
+  setSelectedClassicalSlice: (slice) => set({ selectedClassicalSlice: slice }),
+  setSelectedSliceStructureKey: (key) => set({ selectedSliceStructureKey: key }),
+  setDementiaFilterQuery: (query) => set({ dementiaFilterQuery: query }),
+  setSelectedLayerNum: (layer) => set({ selectedLayerNum: layer }),
 }));
