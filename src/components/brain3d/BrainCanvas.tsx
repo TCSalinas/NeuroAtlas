@@ -12,48 +12,71 @@ const CameraManager: React.FC = () => {
   const cameraPresetTarget = useNeuroStore((s) => s.cameraPresetTarget);
 
   const targetPosRef = useRef<THREE.Vector3 | null>(null);
+  const targetLookAtRef = useRef<THREE.Vector3 | null>(null);
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   useEffect(() => {
     if (!cameraPresetTarget) return;
 
-    let target = new THREE.Vector3(3.2, 2.0, 3.8); // Default reset
+    // Mobile screens have narrow portrait aspect ratio; distance needs to be ~1.35x further back
+    const scale = isMobile ? 1.35 : 1.0;
+
+    let target = new THREE.Vector3(3.2 * scale, 2.0 * scale, 3.8 * scale); // Default reset
     switch (cameraPresetTarget) {
       case 'lateral_izq':
-        target = new THREE.Vector3(-4.8, 0.3, 0);
+        target = new THREE.Vector3(-4.8 * scale, 0.3 * scale, 0);
         break;
       case 'lateral_der':
-        target = new THREE.Vector3(4.8, 0.3, 0);
+        target = new THREE.Vector3(4.8 * scale, 0.3 * scale, 0);
         break;
       case 'medial_sagital':
-        target = new THREE.Vector3(-4.2, 0.2, 0.8);
+        target = new THREE.Vector3(-4.2 * scale, 0.2 * scale, 0.8 * scale);
         break;
       case 'superior':
-        target = new THREE.Vector3(0, 5.0, 0.05);
+        target = new THREE.Vector3(0, 5.0 * scale, 0.05);
         break;
       case 'inferior':
-        target = new THREE.Vector3(0, -4.8, 0.05);
+        target = new THREE.Vector3(0, -4.8 * scale, 0.05);
         break;
       case 'anterior':
-        target = new THREE.Vector3(0, 0.2, 4.8);
+        target = new THREE.Vector3(0, 0.2 * scale, 4.8 * scale);
         break;
       case 'posterior':
-        target = new THREE.Vector3(0, 0.2, -4.8);
+        target = new THREE.Vector3(0, 0.2 * scale, -4.8 * scale);
         break;
       case 'reset':
+      case 'centrar':
       default:
-        target = new THREE.Vector3(3.2, 2.0, 3.8);
+        target = new THREE.Vector3(3.2 * scale, 2.0 * scale, 3.8 * scale);
         break;
     }
 
     targetPosRef.current = target;
-  }, [cameraPresetTarget]);
+    // Crucial for mobile centering: always animate controls target back to origin (0, 0, 0)
+    targetLookAtRef.current = new THREE.Vector3(0, 0, 0);
+  }, [cameraPresetTarget, isMobile]);
 
   useFrame(() => {
+    let needsUpdate = false;
     if (targetPosRef.current) {
-      camera.position.lerp(targetPosRef.current, 0.08);
+      camera.position.lerp(targetPosRef.current, 0.1);
+      needsUpdate = true;
       if (camera.position.distanceTo(targetPosRef.current) < 0.02) {
+        camera.position.copy(targetPosRef.current);
         targetPosRef.current = null;
       }
+    }
+    if (targetLookAtRef.current && controlsRef.current) {
+      controlsRef.current.target.lerp(targetLookAtRef.current, 0.1);
+      needsUpdate = true;
+      if (controlsRef.current.target.distanceTo(targetLookAtRef.current) < 0.01) {
+        controlsRef.current.target.copy(targetLookAtRef.current);
+        targetLookAtRef.current = null;
+      }
+    }
+    if (needsUpdate && controlsRef.current) {
+      controlsRef.current.update();
     }
   });
 
@@ -61,11 +84,12 @@ const CameraManager: React.FC = () => {
     <OrbitControls
       ref={controlsRef}
       enableDamping
-      dampingFactor={0.06}
-      rotateSpeed={0.7}
-      panSpeed={0.6}
-      minDistance={1.8}
-      maxDistance={9.0}
+      dampingFactor={0.08}
+      rotateSpeed={isMobile ? 1.05 : 0.75}
+      panSpeed={isMobile ? 0.9 : 0.6}
+      screenSpacePanning={true}
+      minDistance={1.5}
+      maxDistance={12.0}
       touches={{
         ONE: THREE.TOUCH.ROTATE,
         TWO: THREE.TOUCH.DOLLY_PAN,
@@ -75,10 +99,30 @@ const CameraManager: React.FC = () => {
 };
 
 export const BrainCanvas: React.FC = () => {
+  const triggerCameraPreset = useNeuroStore((s) => s.triggerCameraPreset);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const lastTapRef = useRef<number>(0);
+
+  // Quick double-tap anywhere on mobile canvas to re-center smoothly
+  const handleTouchEnd = () => {
+    const now = Date.now();
+    if (now - lastTapRef.current < 320) {
+      triggerCameraPreset('reset');
+    }
+    lastTapRef.current = now;
+  };
+
   return (
-    <div className="w-full h-full relative bg-gradient-to-b from-[#f9f7f2] via-[#f2eee5] to-[#e8e2d5] select-none touch-none">
+    <div
+      onDoubleClick={() => triggerCameraPreset('reset')}
+      onTouchEnd={handleTouchEnd}
+      className="w-full h-full relative bg-gradient-to-b from-[#f9f7f2] via-[#f2eee5] to-[#e8e2d5] select-none touch-none"
+    >
       <Canvas
-        camera={{ position: [3.2, 2.0, 3.8], fov: 45 }}
+        camera={{
+          position: isMobile ? [4.32, 2.7, 5.13] : [3.2, 2.0, 3.8],
+          fov: 45,
+        }}
         gl={{
           antialias: true,
           localClippingEnabled: true,
@@ -93,7 +137,7 @@ export const BrainCanvas: React.FC = () => {
       >
         {/* Soft, warm studio museum lighting */}
         <ambientLight intensity={0.9} color="#fffcf5" />
-        
+
         {/* Key Light (warm directional) */}
         <directionalLight position={[6, 8, 6]} intensity={1.3} color="#ffffff" castShadow={false} />
         {/* Fill Light (soft cool daylight) */}
@@ -102,7 +146,7 @@ export const BrainCanvas: React.FC = () => {
         <directionalLight position={[0, -6, 2]} intensity={0.4} color="#fef3c7" />
         {/* Frontal Soft Light */}
         <directionalLight position={[0, 2, 6]} intensity={0.5} color="#ffffff" />
-        
+
         <CameraManager />
         <AnatomicalModel />
       </Canvas>

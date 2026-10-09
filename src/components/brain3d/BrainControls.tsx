@@ -44,7 +44,16 @@ export const BrainControls: React.FC = () => {
       <div className="absolute top-3 left-3 right-3 z-10 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
         {/* Left: View Presets Group */}
         <div className="pointer-events-auto flex items-center gap-1 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-[#e2ded4] shadow-md shadow-stone-200/50">
-          <div className="flex items-center gap-1.5 px-2 py-1 text-slate-500 text-xs font-semibold border-r border-slate-200">
+          <button
+            onClick={() => triggerCameraPreset('reset')}
+            className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold rounded-xl bg-amber-100/90 hover:bg-amber-200 text-amber-950 border border-amber-300 transition-all active:scale-95 shrink-0 shadow-xs"
+            title="Centrar el cerebro en la pantalla (Doble toque en pantalla también centra)"
+          >
+            <Focus className="w-3.5 h-3.5 text-amber-700" />
+            <span>Centrar</span>
+          </button>
+
+          <div className="flex items-center gap-1.5 px-2 py-1 text-slate-500 text-xs font-semibold border-x border-slate-200">
             <Compass className="w-3.5 h-3.5 text-sky-600" />
             <span className="hidden sm:inline">Vistas</span>
           </div>
@@ -193,6 +202,18 @@ export const BrainControls: React.FC = () => {
         <span>Arrastrar: rotar</span>
         <span className="text-slate-300">•</span>
         <span>Rueda: zoom</span>
+      </div>
+
+      {/* Floating Mobile Quick-Center Action (Always thumb-accessible on phones) */}
+      <div className="absolute bottom-4 right-4 z-20 md:hidden pointer-events-auto">
+        <button
+          onClick={() => triggerCameraPreset('reset')}
+          className="flex items-center gap-2 px-3.5 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border-2 border-amber-400 text-amber-950 font-bold text-xs shadow-xl active:scale-95 transition-all shadow-amber-900/10"
+          title="Centrar cerebro en la pantalla"
+        >
+          <Focus className="w-4 h-4 text-amber-600" />
+          <span>Centrar</span>
+        </button>
       </div>
     </>
   );
