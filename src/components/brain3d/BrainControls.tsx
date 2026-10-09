@@ -204,17 +204,19 @@ export const BrainControls: React.FC = () => {
         <span>Rueda: zoom</span>
       </div>
 
-      {/* Floating Mobile Quick-Center Action (Always thumb-accessible on phones) */}
-      <div className="absolute bottom-4 right-4 z-20 md:hidden pointer-events-auto">
-        <button
-          onClick={() => triggerCameraPreset('reset')}
-          className="flex items-center gap-2 px-3.5 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border-2 border-amber-400 text-amber-950 font-bold text-xs shadow-xl active:scale-95 transition-all shadow-amber-900/10"
-          title="Centrar cerebro en la pantalla"
-        >
-          <Focus className="w-4 h-4 text-amber-600" />
-          <span>Centrar</span>
-        </button>
-      </div>
+      {/* Floating Mobile Quick-Center Action (Visible on phones when no bottom sheet is active) */}
+      {!selectedStructureId && (
+        <div className="absolute bottom-4 right-4 z-20 md:hidden pointer-events-auto">
+          <button
+            onClick={() => triggerCameraPreset('reset')}
+            className="flex items-center gap-2 px-3.5 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border-2 border-amber-400 text-amber-950 font-bold text-xs shadow-xl active:scale-95 transition-all shadow-amber-900/10"
+            title="Centrar cerebro en la pantalla"
+          >
+            <Focus className="w-4 h-4 text-amber-600" />
+            <span>Centrar</span>
+          </button>
+        </div>
+      )}
     </>
   );
 };

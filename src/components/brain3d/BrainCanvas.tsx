@@ -15,47 +15,61 @@ const CameraManager: React.FC = () => {
   const targetLookAtRef = useRef<THREE.Vector3 | null>(null);
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const selectedStructureId = useNeuroStore((s) => s.selectedStructureId);
+
+  // Smoothly adjust camera framing when bottom sheet opens/closes on mobile
+  useEffect(() => {
+    if (isMobile) {
+      if (selectedStructureId) {
+        // Elevate camera target so the brain is perfectly framed in the visible top 54% of the screen
+        targetLookAtRef.current = new THREE.Vector3(0, 0.45, 0);
+      } else {
+        targetLookAtRef.current = new THREE.Vector3(0, 0, 0);
+      }
+    }
+  }, [selectedStructureId, isMobile]);
 
   useEffect(() => {
     if (!cameraPresetTarget) return;
 
     // Mobile screens have narrow portrait aspect ratio; distance needs to be ~1.35x further back
     const scale = isMobile ? 1.35 : 1.0;
+    const yOffset = (isMobile && selectedStructureId) ? 0.45 : 0;
 
-    let target = new THREE.Vector3(3.2 * scale, 2.0 * scale, 3.8 * scale); // Default reset
+    let target = new THREE.Vector3(3.2 * scale, 2.0 * scale + yOffset, 3.8 * scale); // Default reset
     switch (cameraPresetTarget) {
       case 'lateral_izq':
-        target = new THREE.Vector3(-4.8 * scale, 0.3 * scale, 0);
+        target = new THREE.Vector3(-4.8 * scale, 0.3 * scale + yOffset, 0);
         break;
       case 'lateral_der':
-        target = new THREE.Vector3(4.8 * scale, 0.3 * scale, 0);
+        target = new THREE.Vector3(4.8 * scale, 0.3 * scale + yOffset, 0);
         break;
       case 'medial_sagital':
-        target = new THREE.Vector3(-4.2 * scale, 0.2 * scale, 0.8 * scale);
+        target = new THREE.Vector3(-4.2 * scale, 0.2 * scale + yOffset, 0.8 * scale);
         break;
       case 'superior':
-        target = new THREE.Vector3(0, 5.0 * scale, 0.05);
+        target = new THREE.Vector3(0, 5.0 * scale + yOffset, 0.05);
         break;
       case 'inferior':
-        target = new THREE.Vector3(0, -4.8 * scale, 0.05);
+        target = new THREE.Vector3(0, -4.8 * scale + yOffset, 0.05);
         break;
       case 'anterior':
-        target = new THREE.Vector3(0, 0.2 * scale, 4.8 * scale);
+        target = new THREE.Vector3(0, 0.2 * scale + yOffset, 4.8 * scale);
         break;
       case 'posterior':
-        target = new THREE.Vector3(0, 0.2 * scale, -4.8 * scale);
+        target = new THREE.Vector3(0, 0.2 * scale + yOffset, -4.8 * scale);
         break;
       case 'reset':
       case 'centrar':
       default:
-        target = new THREE.Vector3(3.2 * scale, 2.0 * scale, 3.8 * scale);
+        target = new THREE.Vector3(3.2 * scale, 2.0 * scale + yOffset, 3.8 * scale);
         break;
     }
 
     targetPosRef.current = target;
-    // Crucial for mobile centering: always animate controls target back to origin (0, 0, 0)
-    targetLookAtRef.current = new THREE.Vector3(0, 0, 0);
-  }, [cameraPresetTarget, isMobile]);
+    // Animate controls target back to origin or elevated mobile framing
+    targetLookAtRef.current = new THREE.Vector3(0, yOffset, 0);
+  }, [cameraPresetTarget, isMobile, selectedStructureId]);
 
   useFrame(() => {
     let needsUpdate = false;

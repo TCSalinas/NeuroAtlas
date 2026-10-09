@@ -12,10 +12,13 @@ import {
   ExternalLink,
   ChevronRight,
   ChevronLeft,
+  ChevronUp,
+  ChevronDown,
   Sparkles,
   MapPin,
   X,
   Maximize2,
+  Minimize2,
   Image as ImageIcon
 } from 'lucide-react';
 
@@ -28,12 +31,18 @@ export const StructureDrawer: React.FC = () => {
   } = useNeuroStore();
 
   const [activeTab, setActiveTab] = useState<'anatomia' | 'funciones' | 'circuitos' | 'clinica' | 'fuentes'>('anatomia');
+  const [mobileSheetMode, setMobileSheetMode] = useState<'half' | 'expanded' | 'minimized'>('half');
   const [activeFigureModal, setActiveFigureModal] = useState<{
     url: string;
     caption?: string;
     title: string;
     slideOrPage?: string;
   } | null>(null);
+
+  // Auto-reset mobile sheet to half-screen when structure changes
+  React.useEffect(() => {
+    setMobileSheetMode('half');
+  }, [selectedStructureId]);
 
   const tabsRef = React.useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -96,82 +105,184 @@ export const StructureDrawer: React.FC = () => {
 
   return (
     <>
-      {/* Tablet & Mobile Backdrop */}
-      <div
-        onClick={() => selectStructure(null)}
-        className="fixed inset-0 bg-stone-950/30 backdrop-blur-xs z-30 xl:hidden animate-fadeIn"
-      />
+      {/* 
+        NO DARK BACKDROP:
+        Removed fixed inset-0 bg-stone-950/30 backdrop-blur-xs so the 3D brain
+        remains 100% visible and interactive at all times on mobile and tablets.
+      */}
 
-      <aside className="fixed xl:static top-0 bottom-0 right-0 z-40 w-full sm:w-[400px] xl:w-[420px] h-full bg-[#faf8f5] backdrop-blur-xl border-l border-[#e6e1d6] flex flex-col shadow-2xl xl:shadow-none overflow-hidden text-slate-800 font-sans min-w-0">
-        {/* Header of Drawer */}
-        <div className="p-4 border-b border-[#e8e2d5] bg-white shrink-0">
-          <div className="flex items-start justify-between gap-3 min-w-0">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <span
-                  className="w-3.5 h-3.5 rounded-full shrink-0 shadow-sm ring-1 ring-black/10"
-                  style={{ backgroundColor: struct.color }}
-                />
-                <span className="text-[11px] font-bold tracking-wider uppercase text-amber-800 truncate">
-                  {struct.level.replace('_', ' • ')}
-                </span>
-                {struct.isDeepStructure && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-100 border border-purple-300 text-purple-900 font-bold shrink-0">
-                    Subcortical
-                  </span>
-                )}
-                {struct.hierarchy === 'limbica' && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold shrink-0">
-                    Límbico
-                  </span>
-                )}
-              </div>
-              <h2 className="text-lg font-black text-slate-900 leading-tight break-words">{struct.name}</h2>
-              {struct.latinName && (
-                <p className="text-xs text-slate-500 italic mt-0.5 break-words">{struct.latinName}</p>
-              )}
+      <aside
+        className={`fixed z-30 bg-[#faf8f5] shadow-2xl xl:shadow-none overflow-hidden text-slate-800 font-sans min-w-0 transition-all duration-300 ease-in-out flex flex-col
+          /* Mobile: Bottom Sheet */
+          inset-x-0 bottom-0 rounded-t-3xl border-t-2 border-[#ded7c8]
+          ${
+            mobileSheetMode === 'minimized'
+              ? 'h-14'
+              : mobileSheetMode === 'expanded'
+              ? 'h-[86vh]'
+              : 'h-[46vh]'
+          }
+          /* Tablet & Desktop: Right Sidebar */
+          sm:inset-x-auto sm:top-0 sm:bottom-0 sm:right-0 sm:w-[400px] xl:w-[420px] sm:h-full sm:rounded-none sm:border-t-0 sm:border-l sm:border-[#e6e1d6]
+          xl:static
+        `}
+      >
+        {/* Mobile Drag / Grab Handle (tap to cycle half/expanded/minimized) */}
+        <div
+          onClick={() =>
+            setMobileSheetMode((m) =>
+              m === 'half' ? 'expanded' : m === 'expanded' ? 'minimized' : 'half'
+            )
+          }
+          className="sm:hidden pt-2 pb-1 bg-white border-b border-stone-100 flex flex-col items-center justify-center cursor-pointer active:opacity-75 select-none shrink-0"
+        >
+          <div className="w-12 h-1.5 bg-stone-300 hover:bg-amber-400 rounded-full transition-colors" />
+          <span className="text-[9px] font-bold text-slate-400 mt-0.5 uppercase tracking-wider">
+            {mobileSheetMode === 'expanded'
+              ? 'Toca para reducir a mitad'
+              : mobileSheetMode === 'minimized'
+              ? 'Toca para expandir ficha'
+              : 'Ficha clínica (toca para pantalla completa)'}
+          </span>
+        </div>
+
+        {/* If minimized on mobile, show compact bottom pill row */}
+        {mobileSheetMode === 'minimized' ? (
+          <div className="flex items-center justify-between px-4 py-2 bg-white h-full sm:hidden">
+            <div
+              className="flex items-center gap-2 flex-1 cursor-pointer min-w-0 mr-2"
+              onClick={() => setMobileSheetMode('half')}
+            >
+              <span
+                className="w-3.5 h-3.5 rounded-full shrink-0 shadow-sm ring-1 ring-black/10"
+                style={{ backgroundColor: struct.color }}
+              />
+              <span className="font-black text-sm text-slate-900 truncate">{struct.name}</span>
+              <span className="text-[10px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 font-bold shrink-0">
+                Ver Ficha
+              </span>
             </div>
-
             <div className="flex items-center gap-1.5 shrink-0">
               <button
-                onClick={() => toggleStructureMastered(struct.id)}
-                className={`p-1.5 rounded-xl border transition-all ${
-                  isMastered
-                    ? 'bg-emerald-100 border-emerald-400 text-emerald-800 shadow-sm'
-                    : 'bg-[#f4efe4] border-[#ded7c8] text-slate-600 hover:text-slate-900 hover:bg-[#ede7da]'
-                }`}
-                title={isMastered ? 'Concepto dominado' : 'Marcar como dominado'}
+                onClick={() => setMobileSheetMode('half')}
+                className="p-1.5 text-slate-600 hover:text-slate-900 rounded-xl border border-[#ded7c8] bg-[#f4efe4] active:scale-95 transition-all"
+                title="Expandir a mitad"
               >
-                <CheckCircle2 className="w-4 h-4" />
+                <ChevronUp className="w-4 h-4" />
               </button>
               <button
                 onClick={() => selectStructure(null)}
-                className="px-2.5 py-1 text-slate-600 hover:text-slate-900 hover:bg-[#f4efe4] border border-[#e2ded4] rounded-xl transition-colors flex items-center gap-1"
-                title="Cerrar ficha (o presiona Escape)"
+                className="p-1.5 text-slate-600 hover:text-slate-900 rounded-xl border border-[#ded7c8] bg-[#f4efe4] active:scale-95 transition-all"
+                title="Cerrar ficha"
               >
-                <X className="w-3.5 h-3.5 text-slate-500" />
-                <span className="text-xs font-bold">Cerrar</span>
+                <X className="w-4 h-4" />
               </button>
             </div>
           </div>
+        ) : (
+          <>
+            {/* Header of Drawer */}
+            <div className="p-3.5 sm:p-4 border-b border-[#e8e2d5] bg-white shrink-0">
+              <div className="flex items-start justify-between gap-3 min-w-0">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span
+                      className="w-3.5 h-3.5 rounded-full shrink-0 shadow-sm ring-1 ring-black/10"
+                      style={{ backgroundColor: struct.color }}
+                    />
+                    <span className="text-[11px] font-bold tracking-wider uppercase text-amber-800 truncate">
+                      {struct.level.replace('_', ' • ')}
+                    </span>
+                    {struct.isDeepStructure && (
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-100 border border-purple-300 text-purple-900 font-bold shrink-0">
+                        Subcortical
+                      </span>
+                    )}
+                    {struct.hierarchy === 'limbica' && (
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold shrink-0">
+                        Límbico
+                      </span>
+                    )}
+                  </div>
+                  <h2 className="text-base sm:text-lg font-black text-slate-900 leading-tight break-words">
+                    {struct.name}
+                  </h2>
+                  {struct.latinName && (
+                    <p className="text-xs text-slate-500 italic mt-0.5 break-words">
+                      {struct.latinName}
+                    </p>
+                  )}
+                </div>
 
-          {/* Synonyms & Quick Tags */}
-          <div className="flex flex-wrap items-center gap-1.5 mt-3">
-            {struct.brodmannAreas && struct.brodmannAreas.length > 0 && (
-              <span className="text-[10px] px-2 py-0.5 rounded-md bg-amber-50 border border-amber-300 text-amber-900 font-mono font-bold">
-                Brodmann: {struct.brodmannAreas.join(', ')}
-              </span>
-            )}
-            {vascularTerritory && (
-              <span className="text-[10px] px-2 py-0.5 rounded-md bg-rose-50 border border-rose-300 text-rose-900 font-semibold">
-                Irrigación: {vascularTerritory.id.toUpperCase()}
-              </span>
-            )}
-            <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#f4efe4] border border-[#e2dcd0] text-slate-700 font-medium">
-              Hemisferio: {struct.hemisphere}
-            </span>
-          </div>
-        </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {/* Mobile Size Toggle Button (Half vs Full) */}
+                  <button
+                    onClick={() =>
+                      setMobileSheetMode((m) => (m === 'expanded' ? 'half' : 'expanded'))
+                    }
+                    className="sm:hidden p-1.5 rounded-xl border border-[#ded7c8] bg-[#f4efe4] text-slate-600 hover:text-slate-900 transition-all active:scale-95"
+                    title={
+                      mobileSheetMode === 'expanded'
+                        ? 'Reducir a mitad de pantalla'
+                        : 'Ver pantalla completa'
+                    }
+                  >
+                    {mobileSheetMode === 'expanded' ? (
+                      <Minimize2 className="w-4 h-4 text-slate-700" />
+                    ) : (
+                      <Maximize2 className="w-4 h-4 text-slate-700" />
+                    )}
+                  </button>
+
+                  {/* Mobile Minimize to Bottom Bar */}
+                  <button
+                    onClick={() => setMobileSheetMode('minimized')}
+                    className="sm:hidden p-1.5 rounded-xl border border-[#ded7c8] bg-[#f4efe4] text-slate-600 hover:text-slate-900 transition-all active:scale-95"
+                    title="Minimizar ficha a barra inferior"
+                  >
+                    <ChevronDown className="w-4 h-4 text-slate-700" />
+                  </button>
+
+                  <button
+                    onClick={() => toggleStructureMastered(struct.id)}
+                    className={`p-1.5 rounded-xl border transition-all ${
+                      isMastered
+                        ? 'bg-emerald-100 border-emerald-400 text-emerald-800 shadow-sm'
+                        : 'bg-[#f4efe4] border-[#ded7c8] text-slate-600 hover:text-slate-900 hover:bg-[#ede7da]'
+                    }`}
+                    title={isMastered ? 'Concepto dominado' : 'Marcar como dominado'}
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                  </button>
+
+                  <button
+                    onClick={() => selectStructure(null)}
+                    className="px-2.5 py-1 text-slate-600 hover:text-slate-900 hover:bg-[#f4efe4] border border-[#e2ded4] rounded-xl transition-colors flex items-center gap-1"
+                    title="Cerrar ficha (o presiona Escape)"
+                  >
+                    <X className="w-3.5 h-3.5 text-slate-500" />
+                    <span className="text-xs font-bold">Cerrar</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Synonyms & Quick Tags */}
+              <div className="flex flex-wrap items-center gap-1.5 mt-2.5 sm:mt-3">
+                {struct.brodmannAreas && struct.brodmannAreas.length > 0 && (
+                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-amber-50 border border-amber-300 text-amber-900 font-mono font-bold">
+                    Brodmann: {struct.brodmannAreas.join(', ')}
+                  </span>
+                )}
+                {vascularTerritory && (
+                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-rose-50 border border-rose-300 text-rose-900 font-semibold">
+                    Irrigación: {vascularTerritory.id.toUpperCase()}
+                  </span>
+                )}
+                <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#f4efe4] border border-[#e2dcd0] text-slate-700 font-medium">
+                  Hemisferio: {struct.hemisphere}
+                </span>
+              </div>
+            </div>
 
         {/* Tabs Bar with Overflow Indicators & Quick Cues */}
         <div className="relative border-b border-[#e8e2d5] bg-[#f5f1e8] shrink-0">
@@ -489,6 +600,8 @@ export const StructureDrawer: React.FC = () => {
             </button>
           </div>
         </div>
+          </>
+        )}
       </aside>
 
       {/* Lightbox Modal for High-Resolution Figure */}
