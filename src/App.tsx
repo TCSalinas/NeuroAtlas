@@ -27,7 +27,7 @@ export const App: React.FC = () => {
         <CourseNavigation />
 
         {/* Center: Dynamic View Area */}
-        <section className="flex-1 h-full relative overflow-hidden flex flex-col">
+        <section className="flex-1 h-full relative overflow-hidden flex flex-col min-w-0">
           {activeView === 'atlas3d' && (
             <div className="w-full h-full relative">
               <BrainControls />

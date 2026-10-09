@@ -102,7 +102,7 @@ export const useNeuroStore = create<NeuroState>((set, get) => ({
   selectedSliceStructureKey: null,
   dementiaFilterQuery: null,
   selectedLayerNum: null,
-  isSidebarOpen: false,
+  isSidebarOpen: typeof window !== 'undefined' ? window.innerWidth >= 1024 : true,
 
   selectStructure: (id) => {
     set((state) => ({

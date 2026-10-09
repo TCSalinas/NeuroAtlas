@@ -10,7 +10,7 @@ import {
   ChevronRight,
   BookOpen,
   Filter,
-  X
+  PanelLeftClose
 } from 'lucide-react';
 
 export const CourseNavigation: React.FC = () => {
@@ -51,11 +51,11 @@ export const CourseNavigation: React.FC = () => {
       )}
 
       <aside
-        className={`fixed lg:static top-0 bottom-0 left-0 z-40 w-80 max-w-[85vw] h-full bg-[#faf8f5] backdrop-blur-xl border-r border-[#e6e1d6] flex flex-col shadow-2xl lg:shadow-none transition-transform duration-300 ease-in-out text-slate-800 font-sans ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        } ${!isSidebarOpen ? 'hidden lg:flex' : 'flex'}`}
+        className={`fixed lg:static top-0 bottom-0 left-0 z-40 w-80 max-w-[85vw] h-full bg-[#faf8f5] backdrop-blur-xl border-r border-[#e6e1d6] flex flex-col shadow-2xl lg:shadow-none transition-all duration-300 ease-in-out text-slate-800 font-sans shrink-0 ${
+          isSidebarOpen ? 'translate-x-0 flex' : '-translate-x-full hidden'
+        }`}
       >
-        {/* Search Bar Trigger & Mobile Close Button */}
+        {/* Search Bar Trigger & Collapse Button */}
         <div className="p-3 border-b border-[#e8e2d5] bg-white flex items-center gap-2">
           <button
             onClick={() => {
@@ -66,17 +66,18 @@ export const CourseNavigation: React.FC = () => {
           >
             <span className="flex items-center gap-2">
               <Search className="w-3.5 h-3.5 text-amber-700" />
-              <span className="font-medium">Buscar estructura, síndrome...</span>
+              <span className="font-medium">Buscar estructura...</span>
             </span>
             <kbd className="text-[10px] bg-white text-slate-500 font-mono px-1.5 py-0.5 rounded border border-[#d6cfbe]">⌘K</kbd>
           </button>
 
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className="lg:hidden p-2 text-slate-400 hover:text-slate-800 rounded-xl hover:bg-[#ede7da] transition-colors"
-            title="Cerrar temario"
+            className="p-1.5 px-2 text-slate-500 hover:text-slate-900 rounded-xl hover:bg-[#ede7da] border border-[#e2dcd0] transition-colors flex items-center gap-1 shrink-0"
+            title="Ocultar temario lateral"
           >
-            <X className="w-4 h-4" />
+            <PanelLeftClose className="w-4 h-4 text-slate-600" />
+            <span className="text-[11px] font-bold text-slate-600">Ocultar</span>
           </button>
         </div>
 

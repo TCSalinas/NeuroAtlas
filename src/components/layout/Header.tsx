@@ -12,8 +12,8 @@ import {
   Activity,
   Sparkles,
   Scissors,
-  Menu,
-  X
+  PanelLeftClose,
+  PanelLeftOpen,
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -42,15 +42,26 @@ export const Header: React.FC = () => {
 
   return (
     <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e6e1d6] px-3 sm:px-4 md:px-6 flex items-center justify-between gap-2 sm:gap-4 z-30 select-none shadow-sm shrink-0">
-      {/* Brand & Mobile/Tablet Sidebar Toggle */}
+      {/* Brand & Sidebar Toggle (Always accessible) */}
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <button
           onClick={toggleSidebar}
-          className="lg:hidden p-2 rounded-xl text-slate-700 hover:text-slate-900 bg-[#f4f0e8] hover:bg-[#ede7da] border border-[#ded7c8] transition-colors shrink-0 flex items-center justify-center"
-          title={isSidebarOpen ? 'Cerrar temario' : 'Abrir temario y estructuras'}
-          aria-label="Abrir temario y estructuras"
+          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border transition-all shrink-0 ${
+            isSidebarOpen
+              ? 'bg-amber-100/90 text-amber-950 border-amber-300 shadow-xs'
+              : 'bg-[#f4f0e8] hover:bg-[#ede7da] text-slate-700 hover:text-slate-900 border-[#ded7c8]'
+          }`}
+          title={isSidebarOpen ? 'Ocultar panel lateral (Temario)' : 'Mostrar panel lateral (Temario)'}
+          aria-label={isSidebarOpen ? 'Ocultar temario' : 'Mostrar temario'}
         >
-          {isSidebarOpen ? <X className="w-4 h-4 text-slate-700" /> : <Menu className="w-4 h-4 text-slate-700" />}
+          {isSidebarOpen ? (
+            <PanelLeftClose className="w-4 h-4 text-amber-900" />
+          ) : (
+            <PanelLeftOpen className="w-4 h-4 text-slate-700" />
+          )}
+          <span className="hidden sm:inline text-xs font-bold">
+            {isSidebarOpen ? 'Ocultar' : 'Temario'}
+          </span>
         </button>
 
         <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center shadow-md shadow-amber-500/10 text-white shrink-0">
