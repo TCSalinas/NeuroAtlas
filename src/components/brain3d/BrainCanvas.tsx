@@ -7,7 +7,7 @@ import { useNeuroStore } from '../../store/useNeuroStore';
 
 // Controls camera transitions smoothly based on preset targets
 const CameraManager: React.FC = () => {
-  const { camera } = useThree();
+  const { camera, gl } = useThree();
   const controlsRef = useRef<any>(null);
   const cameraPresetTarget = useNeuroStore((s) => s.cameraPresetTarget);
 
@@ -16,6 +16,16 @@ const CameraManager: React.FC = () => {
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const selectedStructureId = useNeuroStore((s) => s.selectedStructureId);
+
+  // Enforce touchAction none on canvas domElement for iOS Safari gestures
+  useEffect(() => {
+    if (gl && gl.domElement) {
+      gl.domElement.style.touchAction = 'none';
+      (gl.domElement.style as any).webkitTouchCallout = 'none';
+      gl.domElement.style.userSelect = 'none';
+      (gl.domElement.style as any).webkitUserSelect = 'none';
+    }
+  }, [gl]);
 
   // Smoothly adjust camera framing when bottom sheet opens/closes on mobile
   useEffect(() => {
@@ -97,17 +107,18 @@ const CameraManager: React.FC = () => {
   return (
     <OrbitControls
       ref={controlsRef}
+      makeDefault
+      domElement={gl.domElement}
       enableDamping
       dampingFactor={0.08}
-      rotateSpeed={isMobile ? 1.05 : 0.75}
-      panSpeed={isMobile ? 0.9 : 0.6}
+      rotateSpeed={isMobile ? 1.15 : 0.75}
+      panSpeed={isMobile ? 0.95 : 0.6}
       screenSpacePanning={true}
       minDistance={1.5}
       maxDistance={12.0}
-      touches={{
-        ONE: THREE.TOUCH.ROTATE,
-        TWO: THREE.TOUCH.DOLLY_PAN,
-      }}
+      enableRotate={true}
+      enableZoom={true}
+      enablePan={true}
     />
   );
 };
@@ -130,9 +141,12 @@ export const BrainCanvas: React.FC = () => {
     <div
       onDoubleClick={() => triggerCameraPreset('reset')}
       onTouchEnd={handleTouchEnd}
+      style={{ touchAction: 'none' }}
       className="w-full h-full relative bg-gradient-to-b from-[#f9f7f2] via-[#f2eee5] to-[#e8e2d5] select-none touch-none"
     >
       <Canvas
+        style={{ width: '100%', height: '100%', touchAction: 'none' }}
+        className="touch-none select-none"
         camera={{
           position: isMobile ? [4.32, 2.7, 5.13] : [3.2, 2.0, 3.8],
           fov: 45,
@@ -147,6 +161,10 @@ export const BrainCanvas: React.FC = () => {
           gl.localClippingEnabled = true;
           gl.toneMapping = THREE.ACESFilmicToneMapping;
           gl.toneMappingExposure = 1.05;
+          gl.domElement.style.touchAction = 'none';
+          (gl.domElement.style as any).webkitTouchCallout = 'none';
+          gl.domElement.style.userSelect = 'none';
+          (gl.domElement.style as any).webkitUserSelect = 'none';
         }}
       >
         {/* Soft, warm studio museum lighting */}

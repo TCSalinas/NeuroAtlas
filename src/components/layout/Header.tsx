@@ -132,18 +132,23 @@ export const Header: React.FC = () => {
           <>
             {/* Backdrop */}
             <div
-              className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs"
+              className="fixed inset-0 z-40 bg-black/60"
               onClick={() => setIsMobileNavOpen(false)}
             />
 
-            {/* Menu List */}
-            <div className="fixed top-16 left-3 right-3 sm:absolute sm:left-0 sm:right-auto sm:top-full sm:mt-2 sm:w-80 bg-white/98 backdrop-blur-xl rounded-2xl border-2 border-amber-200/90 shadow-2xl z-50 p-2 animate-fadeIn max-h-[75vh] flex flex-col">
-              <div className="px-3 py-2 border-b border-stone-100 flex items-center justify-between">
-                <span className="text-[11px] font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
-                  <Brain className="w-3.5 h-3.5 text-amber-600" />
+            {/* Menu List: 100% Solid White Card */}
+            <div
+              style={{ backgroundColor: '#ffffff', opacity: 1 }}
+              className="fixed top-16 left-3 right-3 sm:absolute sm:left-0 sm:right-auto sm:top-full sm:mt-2 sm:w-80 bg-white rounded-2xl border-2 border-amber-400 shadow-2xl z-50 p-2.5 flex flex-col max-h-[75vh]"
+            >
+              <div className="px-3 py-2 border-b border-stone-200 flex items-center justify-between bg-stone-50 rounded-xl mb-1 shrink-0">
+                <span className="text-[11px] font-black uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
+                  <Brain className="w-4 h-4 text-amber-600" />
                   Secciones del Atlas (7)
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium">Toca para cambiar</span>
+                <span className="text-[10px] text-slate-600 font-bold bg-white px-2 py-0.5 rounded-md border border-stone-200">
+                  Toca para cambiar
+                </span>
               </div>
 
               <div className="py-1.5 flex flex-col gap-1 overflow-y-auto no-scrollbar">

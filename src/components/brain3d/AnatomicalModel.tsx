@@ -563,11 +563,13 @@ export const AnatomicalModel: React.FC = () => {
               selectStructure(isSelected ? null : struct.id);
             }}
             onPointerOver={(e) => {
+              if (e.pointerType !== 'mouse') return;
               e.stopPropagation();
               hoverStructure(struct.id);
               document.body.style.cursor = 'pointer';
             }}
             onPointerOut={(e) => {
+              if (e.pointerType !== 'mouse') return;
               e.stopPropagation();
               hoverStructure(null);
               document.body.style.cursor = 'auto';
